@@ -1,5 +1,4 @@
 
-
 const AllLosts = () => {
   return (
     <div>
