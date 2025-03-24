@@ -13,14 +13,14 @@ exports.getAllLosts=async(req,res)=>{
 }
 
 exports.addLost=async(req,res)=>{
-    const lost=await Lost.create(req.bady)
+    const lost=await Lost.create(req.body)
     res.json(lost)
 }
 
 exports.deleteLost=async(req,res)=>{
     const {id}=req.params
     try{
-        const idLost=await Lost.findOneAndDelete({id:id})
+        const idLost=await Lost.findOneAndDelete({_id:id})
         if(!idLost)
           return  res.status(404).json({message: "lost is not find"})
         res.json({message: "lost delete successfully"})
@@ -35,7 +35,7 @@ exports.updateLost=async(req,res)=>{
     const{category,name,city,street,owner,date}=req.body
     try{
         const updateLost=await Lost.findOneAndUpdate(
-            {id:id},
+            {_id:id},
             {category,name,city,street,owner,date},
             {new:true}
         )
@@ -53,7 +53,7 @@ exports.updateLost=async(req,res)=>{
 exports.getLostById =async(req,res)=>{
  const{id}=req.params
  try{
-    const lost=await Lost.findOne({id:id})
+    const lost=await Lost.findOne({_id:id})
     if(!lost){
         return res.street(404).json({message:"lost not find"})
     }

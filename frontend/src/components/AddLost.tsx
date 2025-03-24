@@ -2,10 +2,8 @@
 
 const AddLost = () => {
   return (
-    <div>
-      
-    </div>
-  );
+    <div>AddLost</div>
+  )
 }
 
-export default AddLost;
+export default AddLost

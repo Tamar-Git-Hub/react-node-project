@@ -1,15 +1,13 @@
-import ButtomNuv from "./ButtomNav"
+import ButtomNav from "./ButtomNav"
 
- 
 
 const HomePage = () => {
   return (
-    <div>
-        <h2>HomePage</h2>
-        <ButtomNuv/>
-    </div>
+    <>
+    <div>HomePage</div>
+    <ButtomNav/>
+    </>
   )
 }
 
 export default HomePage
-
