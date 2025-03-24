@@ -6,20 +6,15 @@ import AddFound from "../components/AddFound";
 import AllLosts from "../components/AllLosts";
 import AllFounds from "../components/AllFounds";
 
-const router=createBrowserRouter([{
-    element:<AppLayout/>,
-    children:[
-        {
-            index:true,
-            element:<HomePage/>
-        },
-        {path:"addLost",element:<AddLost/>},
-        {path:"addFound",element:<AddFound/>},
-        {path:"allLosts",element:<AllLosts/>},
-        {path:"allFounds",element:<AllFounds/>}
 
+const router = createBrowserRouter([{
+    element: <AppLayout />,
+    children: [
+        {index: true, element: <HomePage />},
+        {path: "addLost", element: <AddLost /> },
+        {path: "addFound", element: <AddFound/>},
+        {path: "allLosts", element: <AllLosts/>},
+        {path: "allFounds", element: <AllFounds/>}
     ]
 }])
-
-
 export default router

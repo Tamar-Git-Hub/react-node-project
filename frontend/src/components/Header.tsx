@@ -1,59 +1,67 @@
-// import { Dialog, DialogActions, Modal } from "@mui/material"
-import { Dialog, DialogActions, Modal } from "@mui/material"
-import {  useState } from "react"
-import { NavLink } from "react-router"
-import Login from "./Login"
-import { CSSProperties } from "react";
-import SighUp from "./SighUp";
-const navStyle:CSSProperties={
- display:'flex',
-//  backgroundColor: "red",
- position: "fixed", 
- top: "0px", 
- right: "0px",
- left: "0px",
-justifyContent: "space-between" ,
-  padding:'2%'
-
-}
-const logingStyle={
-// margin:'auto',
- display:'flex'
-}
-const moveLeft={
-    marginLeft:'1vw'
-}
+import { Dialog, DialogActions, Modal } from "@mui/material";
+import { useState } from "react";
+import { NavLink } from "react-router";
+import LogIn from "./LogIn";
+import { CSSProperties } from 'react';
+import SignUp from "./SignUp";
 const Header = () => {
-    const [isOpenModal,setIsOpenModal]=useState<boolean>(false)
-    const [isSighUpModal,setIsSighUpModal]=useState<boolean>(false)
+    const [isOpenModal, setOpenModal] = useState<boolean>(false);
+    const [isSignUpOpen, setSignUpModal]=useState<boolean>(false)
+
+    const navStyle: CSSProperties = {
+      display: 'flex',
+      position: 'fixed', 
+      top: '0px',
+      left: '0px',
+      right: '0px',
+      justifyContent: 'space-between',
+      padding: '2%',
+    };
+    const loggingStyle = {
+        display: 'flex',
+        color: 'black',
+    }
+    const moveLeft = {
+        marginLeft: '1vw'
+    }
+    const HandleClickLogIn = () => {
+        setOpenModal(!isOpenModal)
+    }
+    const HandleClickSignUp=()=>{
+        setSignUpModal(!isSignUpOpen)
+    }
     return (
         <div>
             <nav style={navStyle}>
-                <NavLink to="/">Losses & founds</NavLink>
-                <div style={logingStyle}>
-                <div style={moveLeft} onClick={()=>setIsOpenModal(!isOpenModal)}>log in</div>
-                <Modal open={isOpenModal}>
-                    <Dialog  open={isOpenModal} >
-                        <DialogActions/>
-                          <div>
-                              <Login setIsOpenModal={setIsOpenModal}/>
-                          </div>
-                    </Dialog>
-                </Modal>
-                <div style={moveLeft}>|</div>
-                <div style={moveLeft} onClick={()=>setIsSighUpModal(!isSighUpModal)}>sign up</div>
-                <Modal open={isSighUpModal}>
-                    <Dialog  open={isSighUpModal} >
-                        <DialogActions/>
-                          <div>
-                              <SighUp setIsSighUpModal={setIsSighUpModal}/>
-                          </div>
-                    </Dialog>
-                </Modal>
+                <NavLink to="/">
+                    <label>Losses & founds</label>
+                </NavLink>
+                <div style={loggingStyle}>
+                    <div style={moveLeft} onClick={HandleClickLogIn}>
+                        log in
+                    </div>
+                    <Modal open={isOpenModal}>
+                        <Dialog open={isOpenModal}>
+                            <DialogActions />
+                            <div>
+                                <LogIn setOpenModal={setOpenModal} />
+                            </div>
+                        </Dialog>
+                    </Modal>
+                    <div style={moveLeft}>|</div>
+                    <div style={moveLeft} onClick={HandleClickSignUp}>sign up</div>
+                    <Modal open={isSignUpOpen}>
+                        <Dialog open={isSignUpOpen}>
+                            <DialogActions />
+                            <div>
+                                <SignUp setSignUpModal={setSignUpModal} />
+                            </div>
+                        </Dialog>
+                    </Modal>
                 </div>
             </nav>
         </div>
-    )
-}
+    );
+};
 
-export default Header
+export default Header;

@@ -13,14 +13,14 @@ exports.getAllUsers=async(req,res)=>{
 }
 
 exports.addUser=async(req,res)=>{
-    const user=await User.create(req.bady)
+    const user=await User.create(req.body)
     res.json(user)
 }
 
 exports.deleteUser=async(req,res)=>{
     const {id}=req.params
     try{
-        const User=await User.findOneAndDelete({id:id})
+        const User=await User.findOneAndDelete({_id:id})
         if(!idUser)
           return  res.status(404).json({message: "user is not find"})
         res.json({message: "user delete successfully"})
@@ -35,7 +35,7 @@ exports.updateUser=async(req,res)=>{
     const{name,password,phone,email}=req.body
     try{
         const updateUser=await User.findOneAndUpdate(
-            {id:id},
+            {_id:id},
             {name,password,phone,email},
             {new:true}
         )
@@ -53,7 +53,7 @@ exports.updateUser=async(req,res)=>{
 exports.getUserById =async(req,res)=>{
  const{id}=req.params
  try{
-    const user=await User.findOne({id:id})
+    const user=await User.findOne({_id:id})
     if(!user){
         return res.street(404).json({message:"user not find"})
     }
