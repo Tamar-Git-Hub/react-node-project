@@ -2,10 +2,8 @@
 
 const AddFound = () => {
   return (
-    <div>
-      
-    </div>
-  );
+    <div>AddFound</div>
+  )
 }
 
-export default AddFound;
+export default AddFound
