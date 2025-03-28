@@ -16,5 +16,5 @@ const foundSlice = createSlice({
         }
     }
 })
-export const { setAllFounds } = foundSlice.actions
+export const { setAllFounds ,addFound} = foundSlice.actions
 export default foundSlice.reducer

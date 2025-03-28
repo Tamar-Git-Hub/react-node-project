@@ -1,13 +1,6 @@
-import { Dialog, DialogActions, Modal } from "@mui/material";
-import { useState } from "react";
-import { NavLink } from "react-router";
-import LogIn from "./LogIn";
+import { Link, NavLink } from "react-router";
 import { CSSProperties } from 'react';
-import SignUp from "./SignUp";
 const Header = () => {
-    const [isOpenModal, setOpenModal] = useState<boolean>(false);
-    const [isSignUpOpen, setSignUpModal]=useState<boolean>(false)
-
     const navStyle: CSSProperties = {
       display: 'flex',
       position: 'fixed', 
@@ -24,12 +17,7 @@ const Header = () => {
     const moveLeft = {
         marginLeft: '1vw'
     }
-    const HandleClickLogIn = () => {
-        setOpenModal(!isOpenModal)
-    }
-    const HandleClickSignUp=()=>{
-        setSignUpModal(!isSignUpOpen)
-    }
+
     return (
         <div>
             <nav style={navStyle}>
@@ -37,27 +25,11 @@ const Header = () => {
                     <label>Losses & founds</label>
                 </NavLink>
                 <div style={loggingStyle}>
-                    <div style={moveLeft} onClick={HandleClickLogIn}>
+                    <Link to="/login" style={moveLeft} >
                         log in
-                    </div>
-                    <Modal open={isOpenModal}>
-                        <Dialog open={isOpenModal}>
-                            <DialogActions />
-                            <div>
-                                <LogIn setOpenModal={setOpenModal} />
-                            </div>
-                        </Dialog>
-                    </Modal>
+                    </Link>
                     <div style={moveLeft}>|</div>
-                    <div style={moveLeft} onClick={HandleClickSignUp}>sign up</div>
-                    <Modal open={isSignUpOpen}>
-                        <Dialog open={isSignUpOpen}>
-                            <DialogActions />
-                            <div>
-                                <SignUp setSignUpModal={setSignUpModal} />
-                            </div>
-                        </Dialog>
-                    </Modal>
+                    <Link to='/users' style={moveLeft}>sign up</Link>
                 </div>
             </nav>
         </div>
