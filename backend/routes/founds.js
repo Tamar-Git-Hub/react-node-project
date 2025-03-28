@@ -1,13 +1,13 @@
-const express =require('express')
-const verifyJWT = require("../middleware/verifyJWT")
+const express=require("express")
 const router=express.Router()
-
-const {getAllFounds,addFound,deleteFounds,updateFound,getFoundById}=require('../controllers/founds')
+const verifyJWT =require('../middlewares/verifyJWT')
+const {getAllFounds,addFound,deleteFound,updateFound,getFoundById}=require("../controllers/founds")
 
 router.get('/',getAllFounds)
 router.post('/',addFound)
-router.delete('/:id',verifyJWT,deleteFounds)
+router.delete('/:id',verifyJWT,deleteFound)
 router.put('/:id',verifyJWT,updateFound)
 router.get('/:id',verifyJWT,getFoundById)
+
 
 module.exports=router

@@ -5,8 +5,8 @@ const initialState: { allLosts: Lost[] } = {
     allLosts: [],
 };
 
-const lostSlice = createSlice({
-    name: "losts",
+const foundSlice = createSlice({
+    name: "founds",
     initialState,
     reducers: {
         setAllLosts: (state, action) => {
@@ -17,6 +17,5 @@ const lostSlice = createSlice({
         }
     }
 })
-export const { setAllLosts } = lostSlice.actions
-export default lostSlice.reducer
-
+export const { setAllLosts,addLost } = foundSlice.actions
+export default foundSlice.reducer
