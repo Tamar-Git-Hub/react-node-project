@@ -1,10 +1,10 @@
 import { ObjectId } from "mongodb";
 
 export interface User {
-    name: String,
-    password: String,
-    phone: String,
-    email: String,
+    name: string,
+    password: string,
+    phone: string,
+    email: string,
     _id?: ObjectId
 }
 enum Categiry{
@@ -20,25 +20,35 @@ enum Categiry{
 }
 export interface Lost{
     categiry: Categiry,
-    name: String,
-    city: String,
-    street: String,
+    name: string,
+    city: string,
+    street: string,
     owner:  User,
     date: Date,
     _id?: ObjectId
 }
 export interface Found{
     categiry:Categiry,
-    name: String,
-    city: String,
-    street: String,
+    name: string,
+    city: string,
+    street: string,
     owner: User,
     date: Date,
-    identifying: Array<String>,
+    identifying: Array<string>,
     _id?: ObjectId
 }
 export interface LogInUser{
-    email: String,
-    password: String,
+    email: string,
+    password: string,
     _id?:ObjectId
+}
+export interface LoginResponse {
+  accessToken: string;
+  user: {
+    email: string;
+    name: string;
+    password: string; 
+    phone: string;
+    _id: ObjectId;
+  };
 }
