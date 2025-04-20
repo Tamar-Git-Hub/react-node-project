@@ -5,8 +5,8 @@ import AddLost from "../pages/AddLost";
 import AddFound from "../pages/AddFound";
 import AllLosts from "../pages/AllLosts";
 import AllFounds from "../pages/AllFounds";
-import LogIn from "../components/LogIn";
 import SignUp from "../components/SignUp";
+import LogIn from "../components/Login";
 
 
 

@@ -1,5 +1,4 @@
 import ButtomNav from "./ButtomNav"
-import  User from '../schemas/UserSchema'
 
 const HomePage = () => {
 

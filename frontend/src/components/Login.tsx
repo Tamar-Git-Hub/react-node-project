@@ -6,35 +6,45 @@ import LogInSchema from "../schemas/LogInSchema";
 
 import { errorCSS } from "../globalStyle";
 
-import { LogInUser } from "../interfaces/models";
+import {  LogInUser, User} from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
-import { Link } from "react-router";
-import { useGetUserByIdQuery } from "../redux/api/users/apiUserSlice";
+import { Link, useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 
 const LogIn = () => {
- const [ AddLoginMutation]=useAddLoginMutation()
+  const [addLogin] = useAddLoginMutation();
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(LogInSchema) })
+  const [loggedInUserId, setLoggedInUserId] = useState<string>("");
+  const [currentUser,setCurrentUser] = useState<User>()
+  const navigate = useNavigate();
   const onSubmit = async(data: LogInUser) => {
        try {
-        const result = await AddLoginMutation(data).unwrap()
+        const result = await addLogin(data).unwrap() 
         console.log(result);
-        console.log(result.password.toString());
-        
-      
-        const currentUser=useGetUserByIdQuery(result._id?result._id.toString():undefined)
-        console.log(currentUser);
-        
+        console.log("שם המשתמש:", result.user?.name);
+        console.log("טלפון",result.user?.phone);
+
+        setLoggedInUserId(result.user._id.toString());
+        setCurrentUser({_id:result.user._id, name: result.user.name, email:result.user.email,  phone: result.user.phone, password: result.user.password})
+
+        navigate('/');
     } catch (err) {
       
     }
-    finally{
+    finally{   
+
+
    }
   }
 
+  useEffect(() => {
+    if (currentUser) {
+      console.log("פרטי משתמש (מ-useGetUserByIdQuery):", currentUser);
+    }
+  }, [currentUser]);
 
   return (
     <div>
-      {/* <div onClick={() => {disputch(setOpenLogInModal(false)) }}><CancelRoundedIcon /></div> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <TextField id="filled-basic" label="מייל" variant="filled" {...register("email",)} />
