@@ -7,7 +7,9 @@ const apiSliceFound = createApi({
         baseUrl: 'http://localhost:5000',
         prepareHeaders: (headers) => {
             const token = getCookie('token');
+            console.log("token   ",token);
             if (token) {
+               
                 headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
