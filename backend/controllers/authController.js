@@ -6,7 +6,6 @@ const User = require('../models/User');
 const login=async(req,res)=>{
     const User = require('../models/User'); 
 
-    //console.log("innnn");
     const {email, password}=req.body
     if (!email||!password)
         return res.status(400).json({message: "please fill all the required parameters"})

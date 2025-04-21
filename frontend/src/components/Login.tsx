@@ -10,6 +10,7 @@ import {  LogInUser, User} from "../interfaces/models";
 import { useAddLoginMutation } from "../redux/api/loging/apiLoginSlice";
 import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { setCookie } from "../utils/cookieUtils";
 
 const LogIn = () => {
   const [addLogin] = useAddLoginMutation();
@@ -22,11 +23,17 @@ const LogIn = () => {
         const result = await addLogin(data).unwrap() 
         console.log(result);
         console.log("שם המשתמש:", result.user?.name);
-        console.log("טלפון",result.user?.phone);
+        console.log(":טלפון",result.user?.phone);
 
         setLoggedInUserId(result.user._id.toString());
         setCurrentUser({_id:result.user._id, name: result.user.name, email:result.user.email,  phone: result.user.phone, password: result.user.password})
 
+        if (result?.accessToken) {
+          setCookie('token', result.accessToken, 7);
+        } else {
+          console.log("לא נמצא טוקן בתגובה.");
+        }
+        
         navigate('/');
     } catch (err) {
       
