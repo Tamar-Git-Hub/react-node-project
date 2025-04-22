@@ -7,6 +7,7 @@ import Card from '@mui/joy/Card';
 import CardContent from '@mui/joy/CardContent';
 import CardOverflow from '@mui/joy/CardOverflow';
 import Typography from '@mui/joy/Typography';
+import { Link } from "react-router";
 const AllLosts = () => {
   const dispatch = useDispatch()
   const { data: GetAllLostsQuery, isError, isLoading } = useGetAllLostsQuery()
@@ -35,6 +36,7 @@ const AllLosts = () => {
                 {
                   GetAllLostsQuery?.map(lost => (
                     <div key={lost._id?.toString()}>
+                      <Link to={`/losts/${lost._id?.toString()}`}>
                        <Card orientation="horizontal" variant="outlined" sx={{ width: 260 }}>
                 <CardOverflow>
                   <AspectRatio ratio="1" sx={{ width: 90 }}>
@@ -51,7 +53,7 @@ const AllLosts = () => {
                     <div>{lost.name}</div>
                     <div>{lost.city}</div>
                   </Typography>
-                  <Typography level="body-sm">{lost.categiry}</Typography>
+                  <Typography level="body-sm">{lost.category}</Typography>
                 </CardContent>
                 <CardOverflow
                   variant="soft"
@@ -71,7 +73,7 @@ const AllLosts = () => {
                   Lost
                 </CardOverflow>
               </Card>
-
+              </Link>
                     </div>
                   ))
                 }

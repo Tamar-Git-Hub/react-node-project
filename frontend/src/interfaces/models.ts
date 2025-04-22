@@ -7,7 +7,7 @@ export interface User {
   email: String,
   _id?: string 
 }
-enum Categiry{
+enum Category{
 'תכשיטים ושעונים',
 'תיקים ומזוודות',
 'ארנקים וכספים',
@@ -19,7 +19,7 @@ enum Categiry{
 'אחר'
 }
 export interface Lost{
-  categiry: Categiry,
+  category: Category,
   name: String,
   city: String,
   street: String,
@@ -28,7 +28,7 @@ export interface Lost{
   _id?: string 
 }
 export interface Found{
-  categiry:Categiry,
+  category:Category,
   name: String,
   city: String,
   street: String,
