@@ -54,7 +54,7 @@ const AllFounds = () => {
                             <div>{found.name}</div>
                             <div>{found.city}</div>
                           </Typography>
-                          <Typography level="body-sm">{found.categiry}</Typography>
+                          <Typography level="body-sm">{found.category}</Typography>
                         </CardContent>
                         <CardOverflow
                           variant="soft"
