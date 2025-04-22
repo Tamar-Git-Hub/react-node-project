@@ -8,7 +8,6 @@ import AllFounds from "../pages/AllFounds";
 import LogIn from "../components/Login";
 import SignUp from "../components/SignUp";
 import FoundDetails from "../pages/FoundDetails";
-import LostDetails from "../pages/LostDetails";
 
 
 
@@ -19,12 +18,7 @@ const router = createBrowserRouter([{
         { index: true, element: <HomePage /> },
         { path: "addLost", element: <AddLost /> },
         { path: "addFound", element: <AddFound /> },
-        { path: "Losts", 
-            children: [
-                { index: true, element: <AllLosts /> },
-                { path: ":id", element: <LostDetails /> }
-            ]
-        },
+        { path: "Losts", element: <AllLosts /> },
         {
             path: "Founds",
             children: [

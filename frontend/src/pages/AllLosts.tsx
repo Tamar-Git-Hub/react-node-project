@@ -22,7 +22,6 @@ const AllLosts = () => {
   }
   useEffect(()=>{
     fetchingData();
-    console.log(GetAllLostsQuery);
   },[])
 
   return (
