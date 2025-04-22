@@ -1,11 +1,13 @@
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { errorCSS } from "../globalStyle";
+import { errorCSS, loginBox, loginForm, loginTitle, margin, topbtn } from "../globalStyle";
 import { zodResolver } from "@hookform/resolvers/zod";
 import UserSchema from "../schemas/UserSchema";
 import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+// import { Link } from "react-router";
+
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
     const [AddUserMutation] = useAddUserMutation()
@@ -13,19 +15,44 @@ const SignUp = () => {
         try {
             const result = await AddUserMutation(data).unwrap();
             console.log('User added successfully:', result);
+            navigate('/')
         }
         catch (error) {
             console.error('Error adding user:', error);
         }
-        finally{
-           
+        finally {
+
         }
     }
-     
+    const navigate=useNavigate()
+
     return (
         <div>
+            <div >
+                <div style={loginBox}>
+                    <Typography sx={loginTitle}>SignUp</Typography>
+                    <form style={loginForm} onSubmit={handleSubmit(onSubmit)} >
+                        <TextField id="filled-basic" label="שם" variant="filled" {...register("name")} style={margin} />
+                        {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
+                        <TextField id="filled-basic" label="מייל" variant="filled" {...register("email")} style={margin}/>
+                        {errors.email && <div style={errorCSS}>{errors.email.message}</div>}
+                        <TextField id="filled-basic" label="טלפון" variant="filled" {...register("phone")}style={margin} />
+                        {errors.phone && <div style={errorCSS}>{errors.phone.message}</div>}
+                        <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} style={margin}/>
+                        {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
+                        <div> 
+                        <Button variant="contained" color="primary" type="submit" fullWidth style={topbtn}>sign up</Button>
+                        <Button variant="outlined" color="primary" fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
             {/* <div onClick={}><CancelRoundedIcon /></div> */}
-            <form onSubmit={handleSubmit(onSubmit)}>
+            {/* <form onSubmit={handleSubmit(onSubmit)}>
                 <div>שם:</div>
                 <TextField id="filled-basic" label="שם" variant="filled" {...register("name")} />
                 {errors.name && <p style={errorCSS}>{errors.name.message}</p>}
@@ -42,7 +69,7 @@ const SignUp = () => {
             </form>
             <Button variant="outlined">
                 <Link to="/">ביטול</Link>
-            </Button>
+            </Button>  */}
         </div>
     )
 }
