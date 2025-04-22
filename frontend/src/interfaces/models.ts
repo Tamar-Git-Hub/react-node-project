@@ -43,7 +43,7 @@ export interface LogInUser{
   _id?:string 
 }
 export interface LoginResponse {
-  accessToken: String;
+  accessToken: string;
   user: {
     email: String;
     name: String;
