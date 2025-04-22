@@ -5,6 +5,7 @@ const apiSliceSign = createApi({
     reducerPath: "sigup",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
+        credentials: 'include', 
         prepareHeaders: (headers) => {
             const token = getCookie('token');
             if (token) {

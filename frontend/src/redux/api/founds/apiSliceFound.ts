@@ -5,6 +5,7 @@ const apiSliceFound = createApi({
     reducerPath: "founds",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
+        credentials: 'include', 
         prepareHeaders: (headers) => {
             const token = getCookie('token');
             console.log("token   ",token);

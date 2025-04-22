@@ -2,7 +2,6 @@
 import { useParams } from "react-router";
 import { useGetFoundByIdQuery } from "../redux/api/founds/apiFoundSlice";
 import { skipToken } from "@reduxjs/toolkit/query";
-import { useEffect } from "react";
 const FoundDetails = () => {
     const { id } = useParams();
     const { data: found, isLoading, isError } = useGetFoundByIdQuery(id ? id : skipToken);
