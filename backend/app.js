@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 require('dotenv').config();
 const cors=require("cors")
-const cookieParser = require('cookie-parser');
 const userRouter = require('./routes/users')
 const lostRouter = require('./routes/losts')
 const foundRouter = require('./routes/founds')
@@ -13,7 +12,6 @@ const PORT = process.env.PORT || 5000
 connectDB()
 const  mongoose = require("mongoose")
 app.use(cors(corsOptions))
-app.use(cookieParser());
 app.use(express.json())
 app.use(express.static("public"))
 app.use('/users', userRouter)
@@ -25,5 +23,3 @@ mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedT
         console.log(`server is runing on port ${PORT}`);
     })
 ).catch((error) => { console.log(error) })
-
-
