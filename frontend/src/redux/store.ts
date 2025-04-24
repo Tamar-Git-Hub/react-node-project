@@ -16,10 +16,10 @@ const store = configureStore({
     [apiLostSlice.reducerPath]: apiSliceLost.reducer,
     [apiUserSlice.reducerPath]: apiSliceUser.reducer,
     [apiFoundSlice.reducerPath]: apiSliceFound.reducer,
-    [apiLoginSlice.reducerPath]:apiLoginSlice.reducer,
+    [apiLoginSlice.reducerPath]: apiLoginSlice.reducer,
     foundSlice: foundSlice,
-    lostSlice:lostSlice,
-    user:userSlice
+    lostSlice: lostSlice,
+    user: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(

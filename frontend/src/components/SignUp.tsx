@@ -6,7 +6,7 @@ import UserSchema from "../schemas/UserSchema";
 import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 import { useNavigate } from "react-router";
-// import { Link } from "react-router";
+
 
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
