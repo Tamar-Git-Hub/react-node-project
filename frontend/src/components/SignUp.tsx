@@ -21,9 +21,6 @@ const SignUp = () => {
         catch (error) {
             console.error('Error adding user:', error);
         }
-        finally {
-
-        }
     }
    
     return (
