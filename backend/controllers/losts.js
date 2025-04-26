@@ -13,6 +13,7 @@ exports.getAllLosts=async(req,res)=>{
 
 exports.addLost=async(req,res)=>{
     const lost=await Lost.create(req.body)
+    console.log(lost);
     res.json(lost)
 }
 
@@ -66,6 +67,3 @@ exports.getLostById=async(req,res)=>{
         res.status(500).json({ message: 'Failed to get lost' });
     }
 }
-
-
-

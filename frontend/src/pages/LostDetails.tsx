@@ -34,6 +34,7 @@ const LostDetails = () => {
                 <div style={loginBox}>
                     <div >
                         <Typography sx={detailTitle}>פרטי אבידה</Typography>
+                        <Typography sx={Alltext}>האבידה: {lost.name}</Typography>
                         <Typography sx={Alltext}>תאריך מציאה: {foreignDate}</Typography>
                         <Typography sx={Alltext}>תאריך עברי: {hebrewDate}</Typography>
                         <Typography sx={Alltext}>עיר:  {lost.city}</Typography>
