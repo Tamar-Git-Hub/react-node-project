@@ -9,7 +9,7 @@ import { useNavigate } from "react-router";
 import { useState } from "react";
 import {useCookies} from "react-cookie"
 import { useDispatch } from "react-redux";
-import { setCurrentUser as setReduxUser } from "../redux/slice/currentuser";
+import {setCurrentUser as setReduxUser } from "../redux/slice/currentUserSlice";
 
 const LogIn = () => {
   const [loggedInUserId, setLoggedInUserId] = useState<string | undefined>(undefined);
@@ -28,7 +28,8 @@ const LogIn = () => {
       setLoggedInUserId(result.user._id.toString());
       setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password });
       setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
-      dispatch(setReduxUser(currentUser))
+      dispatch(setReduxUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password }));
+      console.log("currentUser ", currentUser);
       navigate('/');
     } catch (err) {
       console.log(err);

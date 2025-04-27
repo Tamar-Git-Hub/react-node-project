@@ -1,12 +1,12 @@
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { errorCSS, loginBox, loginForm, margin, topbtn } from "../globalStyle";
-import {  useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Category, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentuser";
+import { selectCurrentUser } from "../redux/slice/currentUserSlice";
 import { useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
@@ -23,20 +23,24 @@ const AddLost = () => {
       console.error("Invalid date format:", data.date);
       return;
     }
-    {console.log("data",data)}
-    {console.log("selectedCategory",selectedCategory)}
-    const updatedLost = {
-      name: data.name,
-      date: date,
-      city: data.city,
-      street: data.street,
-      identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
-      category: Category[selectedCategory as keyof typeof Category],
-      owner: currentUser,
-    };
-    addLost(updatedLost);
-    setLost(updatedLost);
-    navigate('/')
+    { console.log("data", data) }
+    { console.log("selectedCategory", selectedCategory) }
+    if (currentUser?._id) {
+      const updatedLost = {
+        name: data.name,
+        date: date,
+        city: data.city,
+        street: data.street,
+        identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
+        category: Category[selectedCategory as keyof typeof Category],
+        owner: currentUser._id,
+      };
+      addLost(updatedLost as Lost);
+      setLost(updatedLost);
+      navigate('/');
+    } else {
+      console.error("currentUser is undefined or missing _id, cannot submit lost item.");
+    }
   }
   const addLost = async (data: Lost | null) => {
     try {
@@ -53,7 +57,7 @@ const AddLost = () => {
   }
   const handleChangeCategory = (event: SelectChangeEvent) => {
     console.log(event.target.value);
-    
+
     setSelectedCategory(event.target.value);
   };
   return (

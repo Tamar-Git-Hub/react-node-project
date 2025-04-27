@@ -7,7 +7,8 @@ import apiSliceFound from "./api/founds/apiSliceFound";
 import foundSlice from './slice/foundSlice';
 import lostsSlice from './slice/lostsSlice';
 import userSlice from './slice/userSlice'
-import currentuser from './slice/currentuser'
+import currentuser from './slice/currentUserSlice'
+
 import { configureStore } from '@reduxjs/toolkit';
 import apiLoginSlice from './api/loging/apiLoginSlice';
 import apiCitiesSlice from './api/cities/apiCitiesSlice';
@@ -20,8 +21,8 @@ const store = configureStore({
     [apiCitiesSlice.reducerPath]:apiCitiesSlice.reducer,
     foundSlice: foundSlice,
     lostsSlice:lostsSlice,
-    user:userSlice,
-    currentUserSlice: currentuser,
+    user: currentuser, 
+    usersData: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
@@ -29,9 +30,9 @@ const store = configureStore({
       apiSliceUser.middleware,
       apiSliceFound.middleware,
       apiLoginSlice.middleware,
-    apiCitiesSlice.middleware,
+      apiCitiesSlice.middleware,
   )
 });
 
 export default store;
-export type RootState = ReturnType<typeof store.getState>;
+// export type RootState = ReturnType<typeof store.getState>;

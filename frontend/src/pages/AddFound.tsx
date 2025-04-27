@@ -7,7 +7,7 @@ import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Category, Cities, FieldFillByUser_Found, Found } from "../interfaces/models";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentuser";
+import { selectCurrentUser } from "../redux/slice/currentUserSlice";
 import { useAddFoundMutation } from "../redux/api/founds/apiFoundSlice";
 import { useNavigate } from "react-router";
 const AddFound = () => {
