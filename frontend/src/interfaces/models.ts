@@ -22,7 +22,7 @@ export interface Lost{
   name: String,
   city: String,
   street: String,
-  owner:  User|null,
+  owner: User | string | null
   date: Date,
   identifying: Array<String>,
   _id?: string 

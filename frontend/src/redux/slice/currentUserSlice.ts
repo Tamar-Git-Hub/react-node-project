@@ -12,7 +12,7 @@ import { createSlice } from "@reduxjs/toolkit";
    const initialState: UserState = {
      currentUser: defaultUser,
    };
- const CurrentUserSlice = createSlice({
+ const currentUserSlice = createSlice({
    name: "user",
    initialState,
    reducers: {
@@ -22,7 +22,8 @@ import { createSlice } from "@reduxjs/toolkit";
    
    },
  });
- export const { setCurrentUser } = CurrentUserSlice.actions;
+ export const { setCurrentUser } = currentUserSlice.actions;
  export const selectCurrentUser = (state:{user:UserState} ) =>
-   state.user.currentUser;
- export default CurrentUserSlice.reducer;
+ state.user.currentUser;
+
+ export default currentUserSlice.reducer;
