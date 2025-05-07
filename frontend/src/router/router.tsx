@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import AppLayout from "../components/AppLayout";
-import HomePage from "../components/HomePage";
+import HomePage from "../pages/HomePage";
 import AddLost from "../pages/AddLost";
 import AddFound from "../pages/AddFound";
 import AllLosts from "../pages/AllLosts";
@@ -9,10 +9,7 @@ import LogIn from "../components/LogIn";
 import SignUp from "../components/SignUp";
 import FoundDetails from "../pages/FoundDetails";
 import LostDetails from "../pages/LostDetails";
-
-
-
-
+import AllItems from "../pages/AllItems";
 const router = createBrowserRouter([{
     element: <AppLayout />,
     children: [
@@ -33,9 +30,8 @@ const router = createBrowserRouter([{
             ]
         },
         { path: "login", element: <LogIn /> },
-        { path: "users", element: <SignUp /> }
-
-
+        { path: "users", element: <SignUp /> },
+        {path: "AllItems", element: <AllItems/>}
     ]
 }])
 export default router

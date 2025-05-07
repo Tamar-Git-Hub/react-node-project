@@ -1,43 +1,37 @@
-import { Button } from "@mui/material"
-import { CSSProperties } from "react";
+
 import { NavLink } from "react-router";
-
-
+import { foundIconStyle, lostIconStyle, menuItemStyle, sidebarStyle } from "./CSS-components";
+import { CiHome } from "react-icons/ci";
+import { IoMdAdd } from "react-icons/io";
+import { FaMagnifyingGlass } from "react-icons/fa6";
 const ButtomNav = () => {
-    const navStyle: CSSProperties = {
-        display: 'flex',
-        position: 'fixed',
-        bottom: '0px',
-        left: '0px',
-        right: '0px',
-        justifyContent: 'space-between',
-        padding: '2%',
-
-    };
+   
     return (
-        <div>
-            <nav style={navStyle}>
-                <NavLink to="/addLost">
-                    <Button variant="contained"  color="success"  disableElevation>
-                        הוספת אבידה
-                    </Button>
-                </NavLink>
-                <NavLink to="/addFound">
-                <Button variant="contained"  color="success"  disableElevation>
-                    הוספת מציאה
-                </Button>
-                </NavLink>
-                <NavLink to="/Losts">
-                <Button variant="contained"  color="success"  disableElevation>
-                    צפיה בכל האבידות
-                </Button>
-                </NavLink>
-                <NavLink to="/Founds">
-                <Button variant="contained"  color="success"  disableElevation>
-                    צפיה בכל המציאות
-                </Button>
-                </NavLink>
-            </nav>
+        <div style={sidebarStyle}>
+            <NavLink to="/" style={menuItemStyle}>
+                <span style={lostIconStyle}><CiHome/></span>
+                עמוד הבית
+            </NavLink>
+            <NavLink to="/addLost" style={menuItemStyle}>
+                <span style={lostIconStyle} ><IoMdAdd /></span>
+                הוספת אבידה
+            </NavLink>
+            <NavLink to="/addFound" style={menuItemStyle}>
+                <span style={foundIconStyle}><IoMdAdd /></span>
+                הוספת מציאה
+            </NavLink>
+            <NavLink to="/Losts" style={menuItemStyle}>
+                <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
+                צפיה בכל האבידות
+            </NavLink>
+            <NavLink to="/Founds" style={menuItemStyle}>
+                <span style={{ marginRight: "0.5rem", color: "darkolivegreen" }}><FaMagnifyingGlass /></span>
+                צפיה בכל המציאות
+            </NavLink>
+            <NavLink to="/AllItems" style={menuItemStyle}>
+                <span style={{ marginRight: "0.5rem", color: "darkred" }}><FaMagnifyingGlass /></span>
+                צפיה בכל הפריטים
+            </NavLink>
         </div>
     )
 }

@@ -7,7 +7,7 @@ import apiSliceFound from "./api/founds/apiSliceFound";
 import foundSlice from './slice/foundSlice';
 import lostsSlice from './slice/lostsSlice';
 import userSlice from './slice/userSlice'
-import currentuser from './slice/currentUserSlice'
+import currentuser from './slice/currentuser'
 
 import { configureStore } from '@reduxjs/toolkit';
 import apiLoginSlice from './api/loging/apiLoginSlice';
@@ -35,4 +35,3 @@ const store = configureStore({
 });
 
 export default store;
-// export type RootState = ReturnType<typeof store.getState>;

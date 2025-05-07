@@ -35,6 +35,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
     },
   },
+  // extraReducers נוכל להוסיף כאן טיפול בפעולות אסינכרוניות בהמשך
 });
 
 export const { setAuthToken, setIsAuthenticated, setLoadingAuth, setErrorAuth, logout } = authSlice.actions;

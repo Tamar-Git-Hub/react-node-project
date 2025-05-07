@@ -3,6 +3,7 @@ const app = express()
 require('dotenv').config();
 const cors=require("cors")
 const userRouter = require('./routes/users')
+const cookieParser = require('cookie-parser');
 const lostRouter = require('./routes/losts')
 const foundRouter = require('./routes/founds')
 const loginRouter=require('./routes/login')
@@ -12,14 +13,13 @@ const connectDB=require("./config/dbConn")
 const PORT = process.env.PORT || 5000
 connectDB()
 const  mongoose = require("mongoose");
-const Lost = require("./models/Lost");
 app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.static("public"))
-app.use('/addFound',addFoundRouter)
 app.use('/users', userRouter)
 app.use('/losts', lostRouter)
 app.use('/founds', foundRouter)
+app.use('/addFound',addFoundRouter)
 app.use('/login', loginRouter)
 mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true }).then(
     () => app.listen(PORT, () => {
@@ -28,16 +28,5 @@ mongoose.connect(process.env.CONECTION_URL, { useNewUrlParser: true, useUnifiedT
 ).catch((error) => { console.log(error) })
 
 
-// async function deleteAllFoundsScript() {
-//   try {
-//     await mongoose.connect(process.env.CONECTION_URL); // החלף בכתובת ה-DB שלך
-//     const foundsResult = await Lost.deleteMany({});
-//     console.log(`נמחקו ${foundsResult.deletedCount} פריטים שנמצאו בהצלחה.`);
-//   } catch (error) {
-//     console.error('שגיאה במחיקת כל הפריטים שנמצאו:', error);
-//   } finally {
-//     mongoose.disconnect();
-//   }
-// }
 
-// deleteAllFoundsScript(); // הפעלת הסקריפט
+

@@ -21,4 +21,3 @@ const apiSliceLogin = createApi({
 });
 
 export default apiSliceLogin;
-
