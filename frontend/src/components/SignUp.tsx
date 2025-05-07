@@ -6,9 +6,10 @@ import UserSchema from "../schemas/UserSchema";
 import { useAddUserMutation } from "../redux/api/users/apiUserSlice";
 import { User } from "../interfaces/models";
 import { useNavigate } from "react-router";
+import { loginButtonStyle } from "./CSS-components";
 import {useCookies} from "react-cookie"
 import { useDispatch } from "react-redux";
-import {setCurrentUser } from "../redux/slice/currentUserSlice";
+import {setCurrentUser } from "../redux/slice/currentuser";
 
 const SignUp = () => {
     const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(UserSchema) })
@@ -19,15 +20,15 @@ const SignUp = () => {
     const onSubmit = async (data: User) => {
         try {
             const result = await AddUserMutation(data).unwrap();
+            console.log('User added successfully:', result);
             setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
             dispatch(setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password }));
-            navigate("/")
+            navigate(1)
         }
         catch (error) {
             console.error('Error adding user:', error);
         }
     }
-   
     return (
         <div>
             <div >
@@ -43,8 +44,8 @@ const SignUp = () => {
                         <TextField id="filled-basic" label="סיסמה" variant="filled" type="password" {...register("password")} style={margin}/>
                         {errors.password && <div style={errorCSS}>{errors.password.message}</div>}
                         <div> 
-                        <Button variant="contained" color="success" type="submit" fullWidth style={topbtn} >sign up</Button>
-                        <Button variant="outlined" color="success" fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
+                        <Button variant="contained"  type="submit" fullWidth style={topbtn} >הירשם</Button>
+                        <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={()=>{navigate('/')}}>ביטול</Button>
                         </div>
                     </form>
                 </div>
@@ -76,6 +77,7 @@ const SignUp = () => {
     )
 }
 export default SignUp
+
 
 
 

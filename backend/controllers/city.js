@@ -1,6 +1,6 @@
 exports.getAllCitiesInIsrael = async (req, res) => {
     const resourceId = '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba';
-    const url = `https://data.gov.il/api/3/action/datastore_search?resource_id=${resourceId}&limit=1000`; 
+    const url = `https://data.gov.il/api/3/action/datastore_search?resource_id=${resourceId}&limit=1000`; // הגדלתי את הלימיט כדי לקבל יותר תוצאות
   
     try {
       const response = await fetch(url);

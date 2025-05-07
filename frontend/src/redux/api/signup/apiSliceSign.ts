@@ -19,4 +19,3 @@ const apiSliceSign = createApi({
 });
 
 export default apiSliceSign;
-

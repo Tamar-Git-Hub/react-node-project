@@ -1,36 +1,34 @@
-import {  User } from "../../../interfaces/models";
+import { User } from "../../../interfaces/models";
 import apiSliceSign from "./apiSliceSign";
-
-
 const apiSignSlice = apiSliceSign.injectEndpoints({
     endpoints: (builder) => ({
-        getAllUsers: builder.query<User[], void>({
-            query: () => "/users",
+        getAllSigns: builder.query<User[], void>({
+            query: () => "/signup",
             providesTags: ["User"],
         }),
-        getUserById: builder.query<User, string>({
-            query: (_id) => `/users/${_id}`,
+        getSignById: builder.query<User, string>({
+            query: (_id) => `/signup/${_id}`,
             providesTags: ["User"],
         }),
-        addUser: builder.mutation<User, User>({
-            query: (newUser) => ({
-                url: "/users",
+        addSign: builder.mutation<User, User>({
+            query: (newSign) => ({
+                url: "/signup",
                 method: "POST",
-                body: newUser,
+                body: newSign,
             }),
             invalidatesTags: ["User"],
         }),
-        updateUser: builder.mutation<User, User>({
-            query: (updateUser) => ({
-                url: `/users/${updateUser._id}`,
+        updateSign: builder.mutation<User, User>({
+            query: (updateSign) => ({
+                url: `/signup/${updateSign._id}`,
                 method: "PUT",
-                body: updateUser,
+                body: updateSign,
             }),
             invalidatesTags: ["User"],
         }),
-        deleteUser: builder.mutation<void, string>({
+        deleteSign: builder.mutation<void, string>({
             query: (_id) => ({
-                url: `/users/${_id}`,
+                url: `/signup/${_id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["User"],
@@ -39,11 +37,10 @@ const apiSignSlice = apiSliceSign.injectEndpoints({
 });
 
 export const {
-    useGetAllUsersQuery,
-    useGetUserByIdQuery,
-    useAddUserMutation,
-    useUpdateUserMutation,
-    useDeleteUserMutation,
+    useGetAllSignsQuery,
+    useGetSignByIdQuery,
+    useAddSignMutation,
+    useUpdateSignMutation,
+    useDeleteSignMutation,
 } = apiSignSlice;
 export default apiSignSlice
-

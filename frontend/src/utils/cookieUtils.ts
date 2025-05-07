@@ -7,7 +7,6 @@ export const setCookie = (name: string, value: string, days: number): void => {
   }
   document.cookie = name + "=" + (value || "") + expires + "; path=/";
 };
-
 export const getCookie = (name: string): string | null => {
   const nameEQ = name + "=";
   const ca = document.cookie.split(';');
@@ -20,11 +19,9 @@ export const getCookie = (name: string): string | null => {
   });
   return result;
 };
-
 export const deleteCookie = (name: string): void => {
   document.cookie = name + "=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
 };
-
 export const getAllCookies = (): { [key: string]: string } => {
   const cookies: { [key: string]: string } = {};
   const ca = document.cookie.split(';');

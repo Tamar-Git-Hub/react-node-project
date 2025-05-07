@@ -12,6 +12,8 @@ exports.getAllFounds=async(req,res)=>{
 }
 
 exports.addFound=async(req,res)=>{
+    console.log("in addFound");
+    
     const found=await Found.create(req.body)
     res.json(found)
 }
@@ -52,6 +54,9 @@ exports.updateFound=async(req,res)=>{
 }
 
 
+
+
+
 exports.getFoundById=async(req,res)=>{
     const {id}=req.params
     try{
@@ -69,3 +74,15 @@ exports.getFoundById=async(req,res)=>{
 }
 
 
+
+
+
+
+
+
+
+//add
+//delete
+//update
+//getbyId
+//getAll

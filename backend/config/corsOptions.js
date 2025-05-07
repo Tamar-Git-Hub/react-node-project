@@ -1,5 +1,7 @@
 const allowedOrigins = [
   'http://localhost:5173', 
+  'http://localhost:8000', 
+  'http://localhost:7000', 
   'http://localhost:5000',
   'http://localhost:3000' 
 ];
@@ -12,6 +14,11 @@ const corsOptions = {
       }
   },
   credentials: true, 
+
   optionsSuccessStatus: 200
 };
 module.exports = corsOptions;
+
+
+
+

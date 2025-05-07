@@ -1,16 +1,13 @@
 
 import { LoginResponse, User } from "../../../interfaces/models";
 import apiSliceUser from "./apiSliceUser";
-
-
-
 const apiUserSlice = apiSliceUser.injectEndpoints({
     endpoints: (builder) => ({
         getAllUsers: builder.query<User[], void>({
             query: () => "/users",
             providesTags: ["User"],
         }),
-        getUserById: builder.query<User, string|undefined>({
+        getUserById: builder.query<User, string>({
             query: (_id) => `/users/${_id}`,
             providesTags: ["User"],
         }),

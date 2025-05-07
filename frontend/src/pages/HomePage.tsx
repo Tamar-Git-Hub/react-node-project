@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
-import ButtomNav from "./ButtomNav";
-import { useCookies } from 'react-cookie';
+
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser,selectCurrentUser} from "../redux/slice/currentUserSlice";
-import { User } from '../interfaces/models';
+import Add from "../components/Add"
+import LastItems from "../components/LastItems"
+import { selectCurrentUser, setCurrentUser } from "../redux/slice/currentuser";
+import { useCookies } from "react-cookie";
+import { User } from "../interfaces/models";
 
 const HomePage = () => {
   const [cookies] = useCookies(['token']);
@@ -25,7 +26,6 @@ const HomePage = () => {
       }    
     }
   if(currentUser?.name=='Guest' && currentUser.email==''){
-    console.log("in")
      if(token){
       const payload = decodeJwtPayload(token);
       if (payload) {
@@ -46,11 +46,9 @@ const HomePage = () => {
 }
   return (
     <>
-      <div>HomePage</div>
-      <div>שלום {currentUser?.name}</div>
-      <ButtomNav />
+      <Add />
+      <LastItems/>
     </>
-  );
-};
-
-export default HomePage;
+  )
+}
+export default HomePage

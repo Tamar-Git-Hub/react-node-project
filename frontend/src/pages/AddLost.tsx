@@ -1,15 +1,16 @@
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 import { errorCSS, loginBox, loginForm, margin, topbtn } from "../globalStyle";
-import { useForm } from "react-hook-form";
+import {  useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Category, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
 import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentUserSlice";
+import { selectCurrentUser } from "../redux/slice/currentuser";
 import { useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
+import { mainContentStyle } from "../components/CSS-components";
 const AddLost = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddLostSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
@@ -23,8 +24,6 @@ const AddLost = () => {
       console.error("Invalid date format:", data.date);
       return;
     }
-    { console.log("data", data) }
-    { console.log("selectedCategory", selectedCategory) }
     if (currentUser?._id) {
       const updatedLost = {
         name: data.name,
@@ -48,7 +47,7 @@ const AddLost = () => {
         const result = await AddLostMutation(data).unwrap();
         console.log(result);
       } else {
-        console.log("no data");
+        console.log("אין נתונים. לא מבצעים את הקריאה.");
       }
     }
     catch (error) {
@@ -56,12 +55,10 @@ const AddLost = () => {
     }
   }
   const handleChangeCategory = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
-
     setSelectedCategory(event.target.value);
   };
   return (
-    <div>
+    <div style={mainContentStyle}>
       <div style={loginBox}>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
           <TextField
