@@ -1,5 +1,6 @@
 
 import { LoginResponse, User } from "../../../interfaces/models";
+import ResetPassword from "../../../pages/ResetPassword";
 import apiSliceUser from "./apiSliceUser";
 const apiUserSlice = apiSliceUser.injectEndpoints({
     endpoints: (builder) => ({
@@ -34,7 +35,24 @@ const apiUserSlice = apiSliceUser.injectEndpoints({
             }),
             invalidatesTags: ["User"],
         }),
+    forgotPassword: builder.mutation<{ message: string }, string>({
+      query: (email) => ({
+        url: "/users/forgot-password",
+        method: "POST",
+        body: { email },
+      }),
     }),
+
+    resetPassword: builder.mutation<
+      { message: string },
+      { token:string; password: string }>({
+      query: ({ token, password }) => ({
+        url: "/users/reset-password",
+        method: "POST",
+        body: { token, password },
+      }),
+    }),
+  }),
 });
 
 export const {
@@ -43,5 +61,7 @@ export const {
     useAddUserMutation,
     useUpdateUserMutation,
     useDeleteUserMutation,
+    useForgotPasswordMutation,
+    useResetPasswordMutation
 } = apiUserSlice;
 export default apiUserSlice
