@@ -1,6 +1,6 @@
 exports.getAllCitiesInIsrael = async (req, res) => {
     const resourceId = '5c78e9fa-c2e2-4771-93ff-7f400a12f7ba';
-    const url = `https://data.gov.il/api/3/action/datastore_search?resource_id=${resourceId}&limit=1000`; // הגדלתי את הלימיט כדי לקבל יותר תוצאות
+    const url = `https://data.gov.il/api/3/action/datastore_search?resource_id=${resourceId}&limit=1000`; 
   
     try {
       const response = await fetch(url);
@@ -9,7 +9,7 @@ exports.getAllCitiesInIsrael = async (req, res) => {
          res.status(response.status).json({ message: 'שגיאה בקבלת נתונים מה-API' });
       }
       const data = await response.json();
-      console.log('נתונים שהתקבלו מה-API:', data);
+
       res.json(data);
     } catch (error) {
       console.error('Fail to get cities:', error);
