@@ -1,45 +1,49 @@
 import { Button, TextField, Select, MenuItem, InputLabel, FormControl } from "@mui/material";
-import { errorCSS, loginBox, loginForm, margin, topbtn } from "../globalStyle";
-import {  useForm } from "react-hook-form";
+import { errorCSS, loginForm, margin, topbtn } from "../globalStyle";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { Category, Cities, FieldFillByUser_Lost, Lost } from "../interfaces/models";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "../redux/slice/currentuser";
-import { useNavigate } from "react-router";
+import { Category, Cities, FieldFillByUser_Lost, Lost, User } from "../interfaces/models";
+
+import { Link, useNavigate } from "react-router";
 import AddLostSchema from "../schemas/AddLostSchema";
 import { useAddLostMutation } from "../redux/api/losts/apiLostSlice";
 import { mainContentStyle } from "../components/CSS-components";
+import { inputStyle } from "./CSS-pages";
 const AddLost = () => {
   const { handleSubmit, register, formState: { errors } } = useForm({ resolver: zodResolver(AddLostSchema) });
   const [selectedCategory, setSelectedCategory] = useState<string>("");
   const [, setLost] = useState<Lost | null>(null)
-  const currentUser = useSelector(selectCurrentUser)
   const [AddLostMutation] = useAddLostMutation()
   const navigate = useNavigate()
+  const [currentUser,setCurrentUser]=useState<User>()
+  useEffect(()=>{
+   const data = localStorage.getItem("currentUser");
+    if (data) {
+      setCurrentUser(JSON.parse(data));
+    } else {
+      console.log("לא נמצא מידע ב-localStorage");
+    }
+  },[])
   const onSubmit = (data: FieldFillByUser_Lost) => {
     const date = new Date(data.date);
     if (isNaN(date.getTime())) {
       console.error("Invalid date format:", data.date);
       return;
     }
-    if (currentUser?._id) {
-      const updatedLost = {
-        name: data.name,
-        date: date,
-        city: data.city,
-        street: data.street,
-        identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
-        category: Category[selectedCategory as keyof typeof Category],
-        owner: currentUser._id,
-      };
-      addLost(updatedLost as Lost);
-      setLost(updatedLost);
-      navigate('/');
-    } else {
-      console.error("currentUser is undefined or missing _id, cannot submit lost item.");
-    }
+    const updatedLost = {
+      name: data.name,
+      date: date,
+      city: data.city,
+      street: data.street,
+      identifying: [data.firstIdentity, data.secondIdentity, data.thirdIdentity],
+      category: Category[selectedCategory as keyof typeof Category],
+      owner: currentUser as User
+    };
+    setLost(updatedLost);
+    addLost(updatedLost as Lost);
+    navigate('/');
   }
   const addLost = async (data: Lost | null) => {
     try {
@@ -59,26 +63,29 @@ const AddLost = () => {
   };
   return (
     <div style={mainContentStyle}>
-      <div style={loginBox}>
+      <div style={{ justifyContent: "flex-end" }}>
+        <Link to="/"> ← עמוד הבית </Link>
         <form style={loginForm} onSubmit={handleSubmit(onSubmit)}>
           <TextField
             id="filled-basic"
             label="שם"
-            variant="filled"
+            variant="outlined"
             {...register("name")}
             style={margin}
+            sx={inputStyle}
           />
           {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
           <TextField
             id="filled-date"
             label="תאריך אבידה"
-            variant="filled"
+            sx={inputStyle}
             type="date"
             {...register("date")}
             style={margin}
+            variant="outlined"
           />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
-          <FormControl variant="filled" style={margin} fullWidth>
+          <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
             <InputLabel id="city-select-label">עיר</InputLabel>
             <Select
               labelId="city-select-label"
@@ -103,13 +110,14 @@ const AddLost = () => {
           <TextField
             id="filled-street"
             label="רחוב"
-            variant="filled"
+            variant="outlined"
             type="text"
             {...register("street")}
             style={margin}
+            sx={inputStyle}
           />
           {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
-          <FormControl variant="filled" style={margin} fullWidth>
+          <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
             <InputLabel id="category-select-label" style={margin}>קטגוריה</InputLabel>
             <Select
               labelId="category-select-label"
@@ -129,29 +137,32 @@ const AddLost = () => {
             <TextField
               id="filled-identity-1"
               label="מזהה 1"
-              variant="filled"
+              variant="outlined"
               type="text"
               {...register("firstIdentity")}
               style={margin}
+              sx={inputStyle}
             />
             {errors.firstIdentity && <div style={errorCSS}>{errors.firstIdentity.message}</div>}
 
             <TextField
               id="filled-identity-2"
               label="מזהה 2"
-              variant="filled"
+              variant="outlined"
               type="text"
               {...register("secondIdentity")}
               style={margin}
+              sx={inputStyle}
             />
             {errors.secondIdentity && <div style={errorCSS}>{errors.secondIdentity.message}</div>}
             <TextField
               id="filled-identity-3"
               label="מזהה 3"
-              variant="filled"
+              variant="outlined"
               type="text"
               {...register("thirdIdentity")}
               style={margin}
+              sx={inputStyle}
             />
             {errors.thirdIdentity && <div style={errorCSS}>{errors.thirdIdentity.message}</div>}
           </div>
