@@ -1,5 +1,5 @@
 const Found=require('../models/Found')
-
+const {io}=require("../app")
 exports.getAllFounds=async(req,res)=>{
     try{
         const founds=await Found.find()
@@ -13,8 +13,11 @@ exports.getAllFounds=async(req,res)=>{
 
 exports.addFound=async(req,res)=>{
     console.log("in addFound");
-    
     const found=await Found.create(req.body)
+        io.emit("new-found", {
+      message: `נמצא פריט באזור ${found.street} – לחצו לצפייה!`,
+      data: found
+    });
     res.json(found)
 }
 

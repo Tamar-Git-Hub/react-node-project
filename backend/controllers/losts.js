@@ -1,5 +1,5 @@
 const Lost=require('../models/Lost')
-
+const { io } = require('../app');
 exports.getAllLosts=async(req,res)=>{
     try{
         const losts=await Lost.find()

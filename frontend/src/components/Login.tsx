@@ -50,7 +50,7 @@ const LogIn = () => {
               <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
               <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
             </div>
-            <NavLink to="/forgot-password"  style={{ textTransform: 'none', marginTop: '10px' ,color:"black"}}>שכחתי סיסמה</NavLink>
+            <NavLink to="/forgot-password"  style={{ textTransform: 'none', marginTop: '10px' ,color:"rgb(78, 40, 0)"}}>שכחתי סיסמה</NavLink>
           </form>
         </div>
       </div>

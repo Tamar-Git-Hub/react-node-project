@@ -2,8 +2,7 @@ import { useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Button, TextField, Typography } from "@mui/material";
 import { useResetPasswordMutation } from "../redux/api/users/apiUserSlice";
-
-
+import { loginBox, topbtn } from "../globalStyle";
 const ResetPassword = () => {
   const { token } = useParams();
   const [newPassword, setNewPassword] = useState("");
@@ -11,9 +10,7 @@ const ResetPassword = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
-
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -32,7 +29,7 @@ const ResetPassword = () => {
         token: token || "",
         password: newPassword,
       }).unwrap();
-
+      
       setMessage("הסיסמה אופסה בהצלחה! מעביר לדף התחברות...");
       setTimeout(() => navigate("/login"), 5173);
     } catch (err: any) {
@@ -44,8 +41,9 @@ const ResetPassword = () => {
   if (!token) return <Typography>קישור לא חוקי</Typography>;
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 50 }}>
-      <Typography variant="h5" gutterBottom>איפוס סיסמה</Typography>
+
+    <div style={loginBox}>
+      <Typography variant="h5" gutterBottom sx={topbtn}>איפוס סיסמה</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
