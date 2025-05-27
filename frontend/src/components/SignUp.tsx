@@ -23,6 +23,7 @@ const SignUp = () => {
             console.log('User added successfully:', result);
             setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
             dispatch(setCurrentUser({ _id: result.user._id, name: result.user.name, email: result.user.email, phone: result.user.phone, password: result.user.password }));
+            localStorage.setItem("currentUser", JSON.stringify(result.user));
             navigate(1)
         }
         catch (error) {

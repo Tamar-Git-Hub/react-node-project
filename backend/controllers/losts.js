@@ -1,4 +1,5 @@
 const Lost=require('../models/Lost')
+const mongoose = require('mongoose');
 
 exports.getAllLosts=async(req,res)=>{
     try{
@@ -65,4 +66,20 @@ exports.getLostById=async(req,res)=>{
         console.error('Failed to get lost:', error);
         res.status(500).json({ message: 'Failed to get lost' });
     }
+}
+
+exports.getLostsByIdOwner = async (req, res) => {
+  const { id } = req.params;
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      console.warn("ID לא תקני:", id);
+      return res.status(400).json({ message: 'Invalid user ID format' });
+    }
+    const losts = await Lost.find({ owner: new mongoose.Types.ObjectId(id) });
+    console.log("תוצאות שנמצאו:", losts);
+    res.json(losts);
+  } catch (error) {
+    console.error("שגיאת שרת:", error);
+    res.status(500).json({ message: 'Failed to get losts filtered' });
+  }
 }
