@@ -1,32 +1,27 @@
 import { Link, NavLink } from "react-router";
-
 import { linkStyle, loginButtonStyle, logoStyle, navStyle, signupButtonStyle } from "./CSS-components";
+import { Button } from "@mui/material";
 const Header = () => {
-
     const loggingStyle = {
         display: 'flex',
         color: 'black',
     }
-
     return (
         <div>
             <nav style={navStyle}>
                 <NavLink to="/" style={logoStyle}>
-                    <span style={{ color: "red" }}> | </span>
                     Losses & founds
-                    <span style={{ color: "red" }}> | </span>
                 </NavLink>
                 <div style={loggingStyle}>
                     <Link to="/login" style={linkStyle} >
-                        <button style={loginButtonStyle}>
-                            התחבר
-                        </button>
+                        <Button style={loginButtonStyle}>
+                           התחבר
+                        </Button>
                     </Link>
-
                     <Link to="/users" style={linkStyle} >
-                        <button style={signupButtonStyle}>
+                        <Button style={signupButtonStyle}>
                             הירשם
-                        </button>
+                        </Button>
                     </Link>
                 </div>
             </nav>
