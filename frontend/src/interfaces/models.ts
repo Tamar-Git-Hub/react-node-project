@@ -26,7 +26,6 @@ export interface Lost{
     street: String,
     owner:  User|string|null,
     date: Date,
-    identifying: Array<String>,
     _id?: string 
 }
 export interface Found{
@@ -36,7 +35,6 @@ export interface Found{
     street: string,
     owner: User,
     date: Date,
-    identifying: Array<String>,
     _id?: string 
 }
 export interface LogInUser{

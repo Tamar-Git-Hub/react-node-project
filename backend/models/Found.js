@@ -13,8 +13,6 @@ const FoundDetails=new mongoose.Schema({
          type: mongoose.Schema.Types.ObjectId,
          ref: User
        },
-     date: Date,
-     identifying: Array,
-   
+     date: Date,   
 })
 module.exports=mongoose.model('Found',FoundDetails)
