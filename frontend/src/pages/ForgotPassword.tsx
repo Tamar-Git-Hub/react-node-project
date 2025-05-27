@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
 import { useForgotPasswordMutation } from "../redux/api/users/apiUserSlice";
+import { detailTitle, loginBox, topbtn } from "../globalStyle";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -21,8 +22,8 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "auto", marginTop: 50 }}>
-      <Typography variant="h5" gutterBottom>שחזור סיסמה</Typography>
+    <div style={loginBox}>
+      <Typography variant="h5" gutterBottom sx={detailTitle}>שחזור סיסמה</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
@@ -39,11 +40,13 @@ const ForgotPassword = () => {
           variant="contained"
           color="primary"
           disabled={sent || isLoading} 
+
+          sx={topbtn}
         >
           {isLoading ? 'שולח...' : 'שלח קישור לאיפוס'}
         </Button>
       </form>
-      {sent && <Typography color="success.main">הקישור נשלח למייל שלך</Typography>} 
+      {sent && <Typography color="success.main" sx={detailTitle}>הקישור נשלח למייל שלך</Typography>} 
       {apiError && <div style={{ color: "red" }}>{ " ERROR "}</div>}
     </div>
   );
