@@ -109,9 +109,6 @@ export interface FieldFillByUser_Lost{
     city: string,
     street: string,
     date: string,
-    firstIdentity: string,
-    secondIdentity: string,
-    thirdIdentity: string,
 
 }
 export enum Filters{
