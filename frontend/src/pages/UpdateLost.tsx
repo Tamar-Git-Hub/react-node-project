@@ -1,23 +1,23 @@
-import { Link, useNavigate, useParams } from "react-router"
-import { mainContentStyle } from "../components/CSS-components"
-import { errorCSS, loginForm, margin, topbtn } from "../globalStyle"
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from "@mui/material"
-import { inputStyle } from "./CSS-pages"
-import { Category, Cities, FieldFillByUser_Lost, Lost, User } from "../interfaces/models"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import AddLostSchema from "../schemas/AddLostSchema"
-import { useEffect, useState } from "react"
-import { useGetLostByIdQuery, useUpdateLostMutation } from "../redux/api/losts/apiLostSlice"
-import { skipToken } from "@reduxjs/toolkit/query"
+import { Link, useNavigate, useParams } from 'react-router'
+import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Category, Cities, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
+import { skipToken } from '@reduxjs/toolkit/query';
+import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { mainContentStyle } from '../components/CSS-components';
+import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
+import { inputStyle } from './CSS-pages';
+import { useGetLostByIdQuery, useUpdateLostMutation } from '../redux/api/losts/apiLostSlice';
+import AddLostSchema from '../schemas/AddLostSchema';
 const UpdateLost = () => {
     const { id } = useParams()
     const { data: thisLost } = useGetLostByIdQuery(id ? id : skipToken)
-    console.log(thisLost);
     const { handleSubmit, register, formState: { errors }, } = useForm({ resolver: zodResolver(AddLostSchema) });
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [, setLost] = useState<Lost | null>(null)
     const [UpdateLostMutation] = useUpdateLostMutation()
+    
     const navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState<User>()
     useEffect(() => {
@@ -41,49 +41,47 @@ const UpdateLost = () => {
             console.error('Error adding user:', error);
         }
     }
+
     const onSubmit = (data: FieldFillByUser_Lost) => {
-        const date = new Date(data.date);
+
+        const isoString = `${data.date}T00:00:00Z`;
+        const date = new Date(isoString);
         if (isNaN(date.getTime())) {
             console.error("Invalid date format:", data.date);
             return;
         }
-        const updatedLost = {
-            name: data.name,
-            date: date,
-            city: data.city,
-            street: data.street,
-            category: Category[selectedCategory as keyof typeof Category],
-            owner: currentUser as User
+        console.log(thisLost?._id);
+        const updatedLost: Lost = {
+            ...data,
+            date,
+            _id: thisLost?._id!,
+            category: Category[
+                selectedCategory as keyof typeof Category
+            ],
+            owner: currentUser as User,
         };
+
         setLost(updatedLost);
-        addLost(updatedLost as Lost);
+        addLost(updatedLost);
         navigate('/');
-    }
+    };
     const handleChangeCategory = (event: SelectChangeEvent) => {
         setSelectedCategory(event.target.value);
     };
-    const formatDate = (date: Date | undefined | string): string => {
-        if (!date) {
-            return '';
-        }
-        if (typeof date === 'string') {
-            const dateObject = new Date(date);
-            if (isNaN(dateObject.getTime())) {
-                return '';
-            }
-            const year = dateObject.getFullYear();
-            const month = (dateObject.getMonth() + 1).toString().padStart(2, '0');
-            const day = dateObject.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        if (date instanceof Date) {
-            const year = date.getFullYear();
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const day = date.getDate().toString().padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        return '';
+    const formatDate = (value?: unknown): string => {
+        if (!value) return '';
+        if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value))
+            return value;
+        const d = new Date(value as string | number | Date);
+        if (isNaN(d.getTime())) return '';
+        const yyyy = d.getUTCFullYear();
+        const mm = String(d.getUTCMonth() + 1).padStart(2, '0');
+        const dd = String(d.getUTCDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
     };
+    if (!thisLost) {
+        return <div>טוען…</div>;   // אל תציג את הטופס לפני שיש נתונים
+    }
     return (
         <div>
             <div style={mainContentStyle}>
@@ -96,7 +94,7 @@ const UpdateLost = () => {
                             {...register("name")}
                             style={margin}
                             sx={inputStyle}
-                            value={thisLost?.name}
+                            defaultValue={thisLost?.name}
                         />
                         {errors.name && <div style={errorCSS}>{errors.name.message}</div>}
                         <TextField
@@ -106,7 +104,7 @@ const UpdateLost = () => {
                             {...register("date")}
                             style={margin}
                             variant="outlined"
-                            value={formatDate(thisLost?.date)}
+                            defaultValue={formatDate(thisLost?.date)}
                         />
                         {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
                         <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
@@ -114,7 +112,7 @@ const UpdateLost = () => {
                             <Select
                                 labelId="city-select-label"
                                 id="city-select"
-                                value={thisLost?.city}
+                                defaultValue={thisLost?.city}
                                 {...register("city", { required: "חובה לבחור עיר" })}
                             >
                                 <MenuItem value="" disabled>בחר עיר</MenuItem>
@@ -133,7 +131,7 @@ const UpdateLost = () => {
                             {...register("street")}
                             style={margin}
                             sx={inputStyle}
-                            value={thisLost?.street}
+                            defaultValue={thisLost?.street}
                         />
                         {errors.street && <div style={errorCSS}>{errors.street.message}</div>}
                         <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
@@ -143,7 +141,7 @@ const UpdateLost = () => {
                             <Select
                                 labelId="category-select-label"
                                 onChange={handleChangeCategory}
-                                value={thisLost?.category}
+                                defaultValue={thisLost?.category}
                                 label="קטגוריה"
                             >
                                 {Object.values(Category)
@@ -155,7 +153,7 @@ const UpdateLost = () => {
                                     ))}
                             </Select>
                         </FormControl>
-                      
+
                         <Button
                             type="submit"
                             fullWidth
@@ -172,4 +170,5 @@ const UpdateLost = () => {
         </div>
     )
 }
+
 export default UpdateLost

@@ -35,11 +35,11 @@ exports.deleteFound = async (req, res) => {
 
 exports.updateFound = async (req, res) => {
     const { id } = req.params
-    const { categiry, name, city, street, owner, date, identifying } = req.body
+    const { categiry, name, city, street, owner, date } = req.body
     try {
         const updateFound = await Found.findOneAndUpdate(
-            { id: id },
-            { categiry, name, city, street, owner, date, identifying },
+            { _id: id },
+            { categiry, name, city, street, owner, date },
             { new: true }
         )
         if (!updateFound) {

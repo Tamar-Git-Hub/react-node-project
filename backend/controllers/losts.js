@@ -32,25 +32,25 @@ exports.deleteLost=async(req,res)=>{
     }
 }
 
-exports.updateLost=async(req,res)=>{
-    const {id}=req.params
-    const {categiry,name,city,street,owner,date}=req.body
-    try{
-        const updateLost=await Lost.findOneAndUpdate(
-            {id: id},
-            {categiry,name,city,street,owner,date},
-            {new: true}
-        )
-        if (!updateLost){
-           return  res.status(404).json({message: 'lost not found'})
-        }
-        res.json(updateLost)
-    }
-    catch(error){
-        console.error('Failed to update lost:', error);
-        res.status(500).json({ message: 'Failed to update lost' });
-    }
-}
+exports.updateLost = async (req, res) => {
+  const { id } = req.params;
+  const { category, name, city, street, owner, date } = req.body;
+
+  try {
+    const updated = await Lost.findOneAndUpdate(
+      { _id: new mongoose.Types.ObjectId(id) },   
+      { category, name, city, street, owner, date },
+      { new: true, runValidators: true }        
+    );
+
+    if (!updated) return res.status(404).json({ message: 'found not found' });
+
+    res.json(updated);
+  } catch (err) {
+    console.error('Failed to update lost:', err);
+    res.status(500).json({ message: 'Failed to update lost' });
+  }
+};
 
 exports.getLostById=async(req,res)=>{
     const {id}=req.params

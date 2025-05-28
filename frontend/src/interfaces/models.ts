@@ -35,7 +35,6 @@ export interface Found{
     street: string,
     owner: User,
     date: Date,
-    identifying: Array<String>,
     _id?: string 
 }
 export interface LogInUser{
