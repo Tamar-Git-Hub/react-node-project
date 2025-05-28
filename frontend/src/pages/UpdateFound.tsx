@@ -57,7 +57,9 @@ const UpdateFound = () => {
             ...data,
             date,
             _id: thisFound?._id!,
-            category: Category[selectedCategory as keyof typeof Category],
+            category: Category[
+                selectedCategory as keyof typeof Category
+            ],
             owner: currentUser as User,
         };
 
