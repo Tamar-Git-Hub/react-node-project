@@ -1,8 +1,8 @@
 const Lost=require('../models/Lost')
 const mongoose = require('mongoose');
-
 exports.getAllLosts=async(req,res)=>{
     try{
+       
         const losts=await Lost.find()
         res.json(losts)
     }
@@ -20,7 +20,7 @@ exports.addLost=async(req,res)=>{
 exports.deleteLost=async(req,res)=>{
     const {id}=req.params
     try{
-        const idLost=await Lost.findOneAndDelete({id:id})
+        const idLost=await Lost.findOneAndDelete({_id: id})
         if (!idLost){
            return  res.status(404).json({message: 'lost not find'})
         }
@@ -32,6 +32,8 @@ exports.deleteLost=async(req,res)=>{
     }
 }
 
+
+
 exports.updateLost = async (req, res) => {
   const { id } = req.params;
   const { category, name, city, street, owner, date } = req.body;
@@ -40,7 +42,7 @@ exports.updateLost = async (req, res) => {
     const updated = await Lost.findOneAndUpdate(
       { _id: new mongoose.Types.ObjectId(id) },   
       { category, name, city, street, owner, date },
-      { new: true, runValidators: true }        
+      { new: true, runValidators: true }          
     );
 
     if (!updated) return res.status(404).json({ message: 'found not found' });
@@ -55,7 +57,7 @@ exports.updateLost = async (req, res) => {
 exports.getLostById=async(req,res)=>{
     const {id}=req.params
     try{
-        console.log('GET /losts/:id hit', req.params.id);
+        
         const lost=await Lost.findById(id);
         if (!lost){
             return res.status(404).json({message: 'lost not found'})
@@ -76,7 +78,7 @@ exports.getLostsByIdOwner = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
     const losts = await Lost.find({ owner: new mongoose.Types.ObjectId(id) });
-    console.log("תוצאות שנמצאו:", losts);
+   
     res.json(losts);
   } catch (error) {
     console.error("שגיאת שרת:", error);

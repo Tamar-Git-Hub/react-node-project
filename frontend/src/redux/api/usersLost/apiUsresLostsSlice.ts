@@ -5,13 +5,13 @@ const apiUsersLostsSlice = apiSliceUser.injectEndpoints({
         getLostsByIdUser: builder.query<Lost[], string>({
             query: (_id) => ({
                 url: `/lostsUser/${_id}`,
-                providesTags: ["Lost"],
             }),
+            providesTags: ["Lost"],
 
         })
     }),
 });
 export const {
-  useGetLostsByIdUserQuery
+    useGetLostsByIdUserQuery
 } = apiUsersLostsSlice;
 export default apiUsersLostsSlice
