@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Category, Cities, FieldFillByUser_Lost, Lost, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
-import { Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
+import { Button, CircularProgress, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { mainContentStyle } from '../components/CSS-components';
 import { errorCSS, loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
@@ -17,7 +17,7 @@ const UpdateLost = () => {
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [, setLost] = useState<Lost | null>(null)
     const [UpdateLostMutation] = useUpdateLostMutation()
-    
+
     const navigate = useNavigate()
     const [currentUser, setCurrentUser] = useState<User>()
     useEffect(() => {
@@ -80,7 +80,7 @@ const UpdateLost = () => {
         return `${yyyy}-${mm}-${dd}`;
     };
     if (!thisLost) {
-        return <div>טוען…</div>;   // אל תציג את הטופס לפני שיש נתונים
+        return <CircularProgress color="error" />
     }
     return (
         <div>
