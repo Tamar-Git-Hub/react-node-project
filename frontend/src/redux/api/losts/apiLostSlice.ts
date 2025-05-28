@@ -27,13 +27,14 @@ const apiLostSlice = apiSliceLost.injectEndpoints({
             }),
             invalidatesTags: ["Lost"],
         }),
-        deleteLost: builder.mutation<void, string>({
-            query: (_id) => ({
-                url: `/losts/${_id}`,
+        deleteLost: builder.mutation<Lost, Lost>({
+            query: (deleteLost) => ({
+                url: `/losts/${deleteLost._id}`,
                 method: "DELETE",
             }),
             invalidatesTags: ["Lost"],
         }),
+       
     }),
 });
 
@@ -43,5 +44,6 @@ export const {
     useAddLostMutation,
     useUpdateLostMutation,
     useDeleteLostMutation,
+  
 } = apiLostSlice;
 export default apiLostSlice

@@ -21,7 +21,7 @@ exports.addFound = async (req, res) => {
 exports.deleteFound = async (req, res) => {
     const { id } = req.params
     try {
-        const idFound = await Found.findOneAndDelete({ id: id })
+        const idFound = await Found.findOneAndDelete({ _id: id })
         if (!idFound) {
             return res.status(404).json({ message: 'found not find' })
         }

@@ -25,6 +25,9 @@ const UserProfile = () => {
     const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const [openD, setOpenDelete] = useState(false);
+  const handleOpenDelete = () => setOpenDelete(true);
+  const handleCloseDelete = () => setOpenDelete(false);
   useEffect(() => {
     const res = localStorage.getItem("currentUser");
     if (res) {
@@ -65,6 +68,8 @@ const UserProfile = () => {
     <div style={mainContentStyle}>
      <Box sx={{ display: 'flex', justifyContent: 'flex-start' }}>
       <Button onClick={handleOpen} style={updateButtonStyle} sx={{ display: "block" }}>לעדכון אבידה או מציאה</Button>
+      <Button onClick={handleOpenDelete} style={updateButtonStyle} sx={{ display: "block" }}>למחיקת אבידה או מציאה</Button>
+
       </Box>
       <Modal
         open={open}
@@ -100,6 +105,59 @@ const UserProfile = () => {
               {LostByIdUser?.map((lost: Lost) => (
                 <div key={lost._id?.toString()} style={itemStyle}>
                   <NavLink to={`/Losts/UpdateLost/${lost._id?.toString()}`}>
+                    <Box sx={items}>
+                      <Chip label="Lost" size="small" sx={lostTitle} />
+                      <Typography mt={1} mb={1}>{lost.name}</Typography>
+                      <Box display="flex" alignItems="center" mb={0.5}>
+                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{lost.city}</Typography>
+                      </Box>
+                      <Box display="flex" alignItems="center">
+                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{lost.category}</Typography>
+                      </Box>
+                    </Box>
+                  </NavLink>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Box>
+      </Modal>
+       <Modal
+        open={openD}
+        onClose={handleCloseDelete}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+           <div style={containerOfFound}>
+            <div style={wrapperStyle}>
+              {FoundsByIdUser?.map((found: Found) => (
+                <div key={found._id?.toString()} style={itemStyle}>
+                  <NavLink to={`/Founds/DeleteFound/${found._id?.toString()}`}>
+                    <Box sx={items}>
+                      <Chip label="Found" size="small" sx={foundTitle} />
+                      <Typography mt={1} mb={1}>{found.name}</Typography>
+                      <Box display="flex" alignItems="center" mb={0.5}>
+                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{found.city}</Typography>
+                      </Box>
+                      <Box display="flex" alignItems="center">
+                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
+                        <Typography>{found.category}</Typography>
+                      </Box>
+                    </Box>
+                  </NavLink>
+                </div>
+              ))}
+            </div>
+          </div>
+           <div style={containerOfFound}>
+            <div style={wrapperStyle}>
+              {LostByIdUser?.map((lost: Lost) => (
+                <div key={lost._id?.toString()} style={itemStyle}>
+                  <NavLink to={`/Losts/DeleteLost/${lost._id?.toString()}`}>
                     <Box sx={items}>
                       <Chip label="Lost" size="small" sx={lostTitle} />
                       <Typography mt={1} mb={1}>{lost.name}</Typography>
