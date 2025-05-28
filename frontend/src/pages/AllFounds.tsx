@@ -15,6 +15,7 @@ import {
   resetByn
 } from "./CSS-pages";
 import { Category } from "../interfaces/models";
+import FoundsMap from "./FoundsMap";
 
 const AllFounds = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const AllFounds = () => {
   const resetHandling = () => {
     setSelectedCategory(null);
   };
-  
+
   const style = {
     position: 'absolute',
     top: '50%',
@@ -65,8 +66,8 @@ const AllFounds = () => {
   const handleClose2 = () => setOpen(false);
   return (
     <div style={mainContentStyle}>
-     
-      <Button onClick={handleOpen}> Google Map הצג מציאות באמצעות </Button>
+
+      <Button onClick={handleOpen}> הצג מציאות באמצעות מפה</Button>
       <Modal
         open={openM}
         onClose={handleClose2}
@@ -74,6 +75,7 @@ const AllFounds = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <FoundsMap />
         </Box>
       </Modal>
       {isLoading ? (

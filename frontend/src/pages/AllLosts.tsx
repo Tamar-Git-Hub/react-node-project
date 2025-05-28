@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import Typography from '@mui/joy/Typography';
 import { Link } from "react-router";
-import {   items, lostTitle, mainContentStyle } from "../components/CSS-components";
+import { items, lostTitle, mainContentStyle } from "../components/CSS-components";
 import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
 import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
 import {
@@ -17,6 +17,7 @@ import {
 import { Category } from "../interfaces/models";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
 import { setAllLosts } from "../redux/slice/lostsSlice";
+import LostsMap from "./LostsMap";
 
 const AllLosts = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const AllLosts = () => {
   const resetHandling = () => {
     setSelectedCategory(null);
   };
- const style = {
+  const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
@@ -71,7 +72,7 @@ const AllLosts = () => {
   const handleClose2 = () => setOpen(false);
   return (
     <div style={mainContentStyle}>
-      <Button onClick={handleOpen}> Google Map הצג מציאות באמצעות </Button>
+      <Button onClick={handleOpen}> הצג מציאות באמצעות מפה</Button>
       <Modal
         open={openM}
         onClose={handleClose2}
@@ -79,6 +80,7 @@ const AllLosts = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <LostsMap />
         </Box>
       </Modal>
       {isLoading ? (
