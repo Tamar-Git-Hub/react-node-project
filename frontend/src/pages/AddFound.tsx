@@ -19,6 +19,11 @@ const AddFound = () => {
   const [currentUser, setCurrentUser] = useState<User>()
   const [AddFoundMutation] = useAddFoundMutation()
   const navigate = useNavigate()
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  const maxDate = `${year}-${month}-${day}`;
   useEffect(() => {
     const data = localStorage.getItem("currentUser");
     if (data) {
@@ -88,6 +93,13 @@ const AddFound = () => {
             {...register("date")}
             style={margin}
             sx={inputStyle}
+            slotProps={{
+              input: {
+                inputProps: {
+                  max: maxDate,
+                },
+              },
+            }}
           />
           {errors.date && <div style={errorCSS}>{errors.date.message}</div>}
           <FormControl variant="outlined" style={margin} sx={inputStyle} fullWidth>
