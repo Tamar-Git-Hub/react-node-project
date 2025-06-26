@@ -16,7 +16,7 @@ const LostsMap = () => {
   const { data: items } = useGetAllLostsQuery();
   const [itemsWithCoords, setItemsWithCoords] = useState<Array<Lost & { lat: number; lng: number }>>([]);
 
-  const getCoordinates = async (street: string | null, city: string): Promise<{ lat: number; lng: number } | null> => {
+const getCoordinates = async (street: string | null, city: string): Promise<{ lat: number; lng: number } | null> => {
     try {
       const query = street ? `${street} ${city}` : city;
       const response = await fetch(
