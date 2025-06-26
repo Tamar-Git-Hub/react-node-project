@@ -6,7 +6,7 @@ const apiUsersFoundsSlice = apiSliceUser.injectEndpoints({
             query: (_id) => ({
                 url: `/foundsUser/${_id}`,
             }),
-            providesTags: ["Found"],
+         providesTags: ["Found"],
         })
     }),
 });

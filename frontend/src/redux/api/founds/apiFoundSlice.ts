@@ -9,8 +9,8 @@ const apiFoundSlice = apiSliceFound.injectEndpoints({
         getFoundById: builder.query<Found, string>({
             query: (_id) => `/founds/${_id}`,
             providesTags: ["Found"],
-        }),
-
+          }),
+      
         addFound: builder.mutation<Found, Found>({
             query: (newFound) => ({
                 url: "/founds",
@@ -34,6 +34,7 @@ const apiFoundSlice = apiSliceFound.injectEndpoints({
             }),
             invalidatesTags: ["Found"],
         }),
+        
     }),
 });
 
@@ -43,5 +44,6 @@ export const {
     useAddFoundMutation,
     useUpdateFoundMutation,
     useDeleteFoundMutation,
+    
 } = apiFoundSlice;
 export default apiFoundSlice

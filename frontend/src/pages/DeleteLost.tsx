@@ -1,5 +1,4 @@
 import { Link, useNavigate, useParams } from 'react-router';
-import { useEffect, useState } from 'react';
 import { useDeleteLostMutation, useGetLostByIdQuery } from '../redux/api/losts/apiLostSlice';
 import { Category, Cities, Lost, User } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
@@ -24,7 +23,7 @@ const DeleteLost = () => {
 
   const confirmAndDelete = async () => {
     if (!thisLost?._id) {
-      console.log("אין אבידה למחיקה");
+    
       return;
     }
 
@@ -33,7 +32,7 @@ const DeleteLost = () => {
 
     try {
       await deleteLost({ _id: thisLost._id } as Lost).unwrap();
-      navigate('/');
+      navigate('/UserProfile');
     } catch (error) {
       console.error("שגיאה במחיקת האבידה:", error);
     }
@@ -74,7 +73,7 @@ const DeleteLost = () => {
               <InputLabel id="city-select-label">עיר</InputLabel>
               <Select
                 labelId="city-select-label"
-                value={thisLost?.city || ''}
+                value={thisLost?.city.trim()  || ''}
                 label="עיר"
                 readOnly
                 disabled
@@ -90,7 +89,7 @@ const DeleteLost = () => {
               style={margin}
               sx={inputStyle}
               value={thisLost?.street || ''}
-              slotProps={{ input: { readOnly: true } }}           
+              InputProps={{ readOnly: true }}
             />
             <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
               <InputLabel id="category-select-label">קטגוריה</InputLabel>
@@ -104,7 +103,7 @@ const DeleteLost = () => {
                 {Object.values(Category)
                   .filter(val => isNaN(Number(val)))
                   .map(category => (
-                    <MenuItem key={category} value={category}>{category}</MenuItem>
+                    <MenuItem key={category} value={category}>{category.replace(/_/g, " ")}</MenuItem>
                   ))}
               </Select>
             </FormControl>

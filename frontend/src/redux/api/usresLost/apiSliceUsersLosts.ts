@@ -18,4 +18,4 @@ const apiSliceUsersLosts = createApi({
     endpoints: () => ({}),
 });
 
- export default apiSliceUsersLosts
+export default apiSliceUsersLosts;

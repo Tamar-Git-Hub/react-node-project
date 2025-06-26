@@ -1,19 +1,24 @@
 import { useDispatch } from "react-redux";
 
 import { useEffect, useState } from "react";
-import Typography from '@mui/joy/Typography';
+
 import { Link } from "react-router";
-import { items, lostTitle, mainContentStyle } from "../components/CSS-components";
-import { Box, Chip, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
-import { FaMapMarkedAlt, FaShoppingBag } from "react-icons/fa";
+import { mainContentStyle } from "../components/CSS-components";
+import { Box, Button, MenuItem, Menu, Modal, CircularProgress } from "@mui/material";
+
 import {
+  badgeStyle,
+  cardStyle,
   cateforyBtn,
   containerOfFound,
   filterContainer,
   frameToCategoryBtn,
-  resetByn
+  iconStyle,
+  resetByn,
+  textRowStyle,
+  titleStyle
 } from "./CSS-pages";
-
+import { MdLocationOn, MdLock } from "react-icons/md";
 import { Category } from "../interfaces/models";
 import { useGetAllLostsQuery } from "../redux/api/losts/apiLostSlice";
 import { setAllLosts } from "../redux/slice/lostsSlice";
@@ -28,7 +33,7 @@ const AllLosts = () => {
 
   useEffect(() => {
     fetchingData();
-    console.log(GetAllLostsQuery);
+   
   }, []);
 
   const fetchingData = async () => {
@@ -49,7 +54,7 @@ const AllLosts = () => {
 
   const handleSelectCategory = (category: Category) => {
     setSelectedCategory(category);
-    console.log(category);
+  
     handleClose();
   };
 
@@ -72,7 +77,7 @@ const AllLosts = () => {
   const handleClose2 = () => setOpen(false);
   return (
     <div style={mainContentStyle}>
-      <Button onClick={handleOpen}> הצג מציאות באמצעות מפה</Button>
+      <Button onClick={handleOpen}> הצג אבדות באמצעות מפה</Button>
       <Modal
         open={openM}
         onClose={handleClose2}
@@ -100,7 +105,7 @@ const AllLosts = () => {
                   .filter((val) => isNaN(Number(val)))
                   .map((category) => (
                     <MenuItem key={category} onClick={() => handleSelectCategory(category)}>
-                      {category}
+                      {category.replace(/_/g, " ")}
                     </MenuItem>
                   ))}
               </Menu>
@@ -115,18 +120,19 @@ const AllLosts = () => {
               {GetAllLostsQuery?.map((lost) => (
                 <div key={lost._id?.toString()}>
                   <Link to={`/Losts/${lost._id?.toString()}`}>
-                    <Box sx={items}>
-                      <Chip label="Lost" size="small" sx={lostTitle} />
-                      <Typography mt={1} mb={1}>{lost.name}</Typography>
-                      <Box display="flex" alignItems="center" mb={0.5}>
-                        <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{lost.city}</Typography>
-                      </Box>
-                      <Box display="flex" alignItems="center">
-                        <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                        <Typography>{lost.category}</Typography>
-                      </Box>
-                    </Box>
+                    <div style={cardStyle}>
+                      <div style={badgeStyle}>Lost</div>
+                      <div style={titleStyle}>{lost.name}</div>
+                      <div style={textRowStyle}>
+                        <MdLocationOn style={iconStyle} />
+                        <span>{lost.city}</span>
+                      </div>
+
+                      <div style={textRowStyle}>
+                        <MdLock style={iconStyle} />
+                        <span>{lost.category.replace(/_/g, " ")}</span>
+                      </div>
+                    </div>
                   </Link>
                 </div>
               ))}
@@ -138,18 +144,19 @@ const AllLosts = () => {
                 .map((lost) => (
                   <div key={lost._id?.toString()}>
                     <Link to={`/Losts/${lost._id?.toString()}`}>
-                      <Box sx={items}>
-                        <Chip label="Lost" size="small" sx={lostTitle} />
-                        <Typography mt={1} mb={1}>{lost.name}</Typography>
-                        <Box display="flex" alignItems="center" mb={0.5}>
-                          <FaMapMarkedAlt style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{lost.city}</Typography>
-                        </Box>
-                        <Box display="flex" alignItems="center">
-                          <FaShoppingBag style={{ marginRight: 8, color: 'grey' }} />
-                          <Typography>{lost.category}</Typography>
-                        </Box>
-                      </Box>
+                       <div style={cardStyle}>
+                      <div style={badgeStyle}>Lost</div>
+                      <div style={titleStyle}>{lost.name}</div>
+                      <div style={textRowStyle}>
+                        <MdLocationOn style={iconStyle} />
+                        <span>{lost.city}</span>
+                      </div>
+
+                      <div style={textRowStyle}>
+                        <MdLock style={iconStyle} />
+                        <span>{lost.category.replace(/_/g, " ")}</span>
+                      </div>
+                    </div>
                     </Link>
                   </div>
                 ))}

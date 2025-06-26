@@ -1,44 +1,31 @@
 import { Link, useNavigate, useParams } from 'react-router';
 import { useDeleteFoundMutation, useGetFoundByIdQuery } from '../redux/api/founds/apiFoundSlice';
-import { useEffect, useState } from 'react';
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { mainContentStyle } from '../components/CSS-components';
 import { loginForm, margin, topbtn } from '../globalStyle';
 import { inputStyle } from './CSS-pages';
-import { Category, Cities, Found, User } from '../interfaces/models';
+import { Category, Cities, Found } from '../interfaces/models';
 import { skipToken } from '@reduxjs/toolkit/query';
-
 const DeleteFound = () => {
   const { id } = useParams();
   const { data: thisFound } = useGetFoundByIdQuery(id ? id : skipToken);
   const [DeleteFoundMutation] = useDeleteFoundMutation();
   const navigate = useNavigate();
-//   const [currentUser, setCurrentUser] = useState<User | null>(null);
-
-//   useEffect(() => {
-//     const data = localStorage.getItem("currentUser");
-//     if (data) {
-//       setCurrentUser(JSON.parse(data));
-//     }
-//   }, []);
-
   const confirmAndDelete = async () => {
     if (!thisFound?._id) {
-      console.log("אין פריט למחיקה");
+   
       return;
     }
-
     const confirmed = window.confirm("האם אתה בטוח שברצונך למחוק את הפריט?");
     if (!confirmed) return;
 
     try {
       await DeleteFoundMutation({ _id: thisFound._id } as Found).unwrap();
-      navigate('/');
+      navigate('/UserProfile');
     } catch (error) {
       console.error("שגיאה במחיקת הפריט:", error);
     }
   };
-
   const formatDate = (date: Date | undefined | string): string => {
     if (!date) return '';
     const dateObj = typeof date === 'string' ? new Date(date) : date;
@@ -48,7 +35,6 @@ const DeleteFound = () => {
     const day = dateObj.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   };
-
   return (
     <div>
       <div style={mainContentStyle}>
@@ -74,7 +60,7 @@ const DeleteFound = () => {
               <InputLabel id="city-select-label">עיר</InputLabel>
               <Select
                 labelId="city-select-label"
-                value={thisFound?.city || ''}
+                value={thisFound?.city.trim() || ''}
                 label="עיר"
                 readOnly
                 disabled
@@ -91,7 +77,7 @@ const DeleteFound = () => {
               sx={inputStyle}
               value={thisFound?.street || ''}
               slotProps={{ input: { readOnly: true } }}           
-            />
+             />
             <FormControl variant="outlined" sx={inputStyle} style={margin} fullWidth>
               <InputLabel id="category-select-label">קטגוריה</InputLabel>
               <Select
@@ -104,11 +90,10 @@ const DeleteFound = () => {
                 {Object.values(Category)
                   .filter(val => isNaN(Number(val)))
                   .map(category => (
-                    <MenuItem key={category} value={category}>{category}</MenuItem>
+                    <MenuItem key={category} value={category}>{category.replace(/_/g, " ")}</MenuItem>
                   ))}
               </Select>
             </FormControl>
-
             <Button
               type="submit"
               fullWidth

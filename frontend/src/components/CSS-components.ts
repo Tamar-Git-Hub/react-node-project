@@ -97,7 +97,8 @@ export const loginButtonStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   cursor: "pointer",
   transition: "background-color 0.3s ease, color 0.3s ease",
-
+   fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "100"
 
 };
 
@@ -114,7 +115,9 @@ export const signupButtonStyle: React.CSSProperties = {
   fontSize: "0.9rem",
   cursor: "pointer",
   transition: "background-color 0.3s ease",
-  marginLeft: "1vw"
+  marginLeft: "1vw",
+  fontFamily: "Segoe UI, sans-serif",
+  fontWeight: "100"
 };
 
 export const signupButtonStyleHover: React.CSSProperties = {
@@ -122,11 +125,11 @@ export const signupButtonStyleHover: React.CSSProperties = {
   color: "#fff",
 };
 export const mainContentStyle: React.CSSProperties = {
-  marginTop: "5vh", // מונע גלישה מתחת לניווט העליון
-  marginLeft: "15vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
+  marginTop: "8vh", // מונע גלישה מתחת לניווט העליון
+  marginLeft: "14vw", // מונע גלישה מתחת לניווט הצדדי (אם הוא בצד שמאל)
   padding: "1rem", // ריווח פנימי לתוכן
-  
-  // ... סגנונות נוספים לתוכן שלך
+  minHeight: "50vh",
+  // minWidth: "100vw"
 };
 export const cardsContainerStyle: CSSProperties = {
   display: 'flex',
@@ -258,3 +261,17 @@ export const btnAllItems:CSSProperties={
   alignItems: 'center',
   gap: '0.5rem',
 }
+export const iconStyle: React.CSSProperties = {
+      width: '1.7vw', 
+    height: '1.7vw',
+    borderRadius: '50%',
+    backgroundColor: 'rgb(111, 110, 110)',
+    color: 'white',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '1vw', 
+    fontWeight: "100",
+    marginLeft: '-0.2vw' 
+  };
+

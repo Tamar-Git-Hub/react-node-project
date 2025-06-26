@@ -1,5 +1,7 @@
-const Found = require('../models/Found')
 const mongoose = require('mongoose');
+const nodemailer = require('nodemailer');
+const Lost = require('../models/Lost');
+const Found = require('../models/Found')
 exports.getAllFounds = async (req, res) => {
     try {
         const founds = await Found.find()
@@ -12,14 +14,20 @@ exports.getAllFounds = async (req, res) => {
 }
 
 exports.addFound = async (req, res) => {
-    console.log("in addFound");
-
+    try{
     const found = await Found.create(req.body)
     res.json(found)
+    match(found)
+    } catch (error) {
+    console.error('Failed to add found:', error);
+    res.status(500).json({ message: 'Failed to add found' });
+  }
+
 }
 
 exports.deleteFound = async (req, res) => {
     const { id } = req.params
+   
     try {
         const idFound = await Found.findOneAndDelete({ _id: id })
         if (!idFound) {
@@ -35,11 +43,12 @@ exports.deleteFound = async (req, res) => {
 
 exports.updateFound = async (req, res) => {
     const { id } = req.params
-    const { categiry, name, city, street, owner, date } = req.body
+    const { category, name, city, street, owner, date } = req.body
+   
     try {
         const updateFound = await Found.findOneAndUpdate(
             { _id: id },
-            { categiry, name, city, street, owner, date },
+            { category, name, city, street, owner, date },
             { new: true }
         )
         if (!updateFound) {
@@ -58,21 +67,24 @@ exports.updateFound = async (req, res) => {
 
 
 exports.getFoundById = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
+
+    // בדיקה מוקדמת שה-id קיים ובפורמט תקין (ObjectId)
+    if (!id || !id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).json({ message: 'Invalid or missing ID' });
+    }
+
     try {
-        console.log('GET /founds/:id hit', req.params.id);
         const found = await Found.findById(id);
         if (!found) {
-            return res.status(404).json({ message: 'found not found' })
+            return res.status(404).json({ message: 'Found not found' });
         }
-        res.json(found)
-    }
-    catch (error) {
+        res.json(found);
+    } catch (error) {
         console.error('Failed to get found:', error);
         res.status(500).json({ message: 'Failed to get found' });
     }
-}
-
+};
 
 exports.getFoundsByIdOwner = async (req, res) => {
   const { id } = req.params;
@@ -82,7 +94,7 @@ exports.getFoundsByIdOwner = async (req, res) => {
       return res.status(400).json({ message: 'Invalid user ID format' });
     }
     const founds = await Found.find({ owner: new mongoose.Types.ObjectId(id) });
-    console.log("תוצאות שנמצאו:", founds);
+    
     res.json(founds);
   } catch (error) {
     console.error("שגיאת שרת:", error);
@@ -90,8 +102,60 @@ exports.getFoundsByIdOwner = async (req, res) => {
   }
 };
 
+const match = async (found) => {
+  const matches = await Lost.find({
+    category: found.category,
+    city: found.city,
+    name: { $regex: `.*${found.name}.*`, $options: 'i' }
+  }).populate('owner');
 
+  if (matches.length === 0) return;
 
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.EMAIL_FROM,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  for (const lostMatch of matches) {
+    const emailToSend = lostMatch.owner.email;
+    const foundItemLink = `${process.env.CLIENT_URL}/Founds/${found._id}`; 
+
+    const mailOptions = {
+      from: `"Lost & Found Team" <${process.env.EMAIL_FROM}>`,
+      to: emailToSend,
+      subject: 'נמצאה מציאה שיכולה להתאים למה שאיבדת',
+      html: `
+        <div style="direction: rtl; font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px;">
+          <h2 style="color: #333;">שלום ${lostMatch.owner.name},</h2>
+          <p>נמצאה מציאה שעשויה להתאים לפריט שאיבדת:</p>
+          <ul>
+            <li><strong>שם הפריט:</strong> ${found.name}</li>
+            <li><strong>קטגוריה:</strong> ${found.category}</li>
+            <li><strong>מיקום:</strong> ${found.city}, ${found.street}</li>
+            <li><strong>תאריך:</strong> ${found.date ? new Date(found.date).toLocaleDateString() : ''}</li>
+          </ul>
+          <p>לפרטים נוספים ולקישור למציאה לחץ על הכפתור הבא:</p>
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${foundItemLink}" style="background-color: #1976d2; color: white; padding: 12px 24px; text-decoration: none; border-radius: 5px; font-weight: bold;" target="_blank">
+              צפה בפריט שנמצא
+            </a>
+          </div>
+          <p style="font-size: 14px; color: #999;">בהצלחה!<br>צוות ממצאי האובדן</p>
+        </div>
+      `,
+    };
+
+    try {
+      await transporter.sendMail(mailOptions);
+     
+    } catch (error) {
+      console.error(`Failed to send email to ${emailToSend}:`, error);
+    }
+  }
+};
 
 
 //add

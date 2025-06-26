@@ -1,3 +1,4 @@
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod"
 import LogInSchema from "../schemas/LogInSchema";
@@ -23,11 +24,11 @@ const LogIn = () => {
     try {
       const result = await addLogin(data).unwrap();
       dispatch(setCurrentUser(result.user))
-      setCookie('token', result.accessToken, { path: '/', maxAge: 3600 * 24 * 7 }); 
+      setCookie('token', result.accessToken, { path: '/', maxAge: 60 * 60 * 24 * 365 * 20 }); 
       localStorage.setItem("currentUser", JSON.stringify(result.user));
       navigate('/')
     } catch (err) {
-      console.log(err);
+     
       setloginError("המשתמש אינו קיים או שאחד מהנתונים שגוי")
       setIsError(true)
     }
@@ -47,11 +48,12 @@ const LogIn = () => {
               <Button type="submit" fullWidth style={topbtn} size="medium" variant="contained" color="success">log in</Button>
               <Button variant="outlined" style={loginButtonStyle} fullWidth onClick={() => { navigate('/') }}>ביטול</Button>
             </div>
-            <NavLink to="/forgot-password"  style={{ textTransform: 'none', marginTop: '10px' ,color:"rgb(78, 40, 0)"}}>שכחתי סיסמה</NavLink>
+            <NavLink to="/forgot-password"  style={{ textTransform: 'none', marginTop: '10px' ,color:"black"}}>שכחתי סיסמה</NavLink>
           </form>
         </div>
       </div>
     </div>
   )
 }
+
 export default LogIn

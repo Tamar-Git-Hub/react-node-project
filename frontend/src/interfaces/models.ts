@@ -1,10 +1,10 @@
 
 
 export interface User {
-    name: String,
-    password: String,
-    phone: String,
-    email: String,
+    name: string,
+    password: string,
+    phone: string,
+    email: string,
     _id?: string 
 }
 export enum Category {
@@ -21,20 +21,21 @@ export enum Category {
   
 export interface Lost{
     category: Category,
-    name: String,
+    name: string,
     city: string,
-    street: String,
-    owner:  User|string|null,
+    street: string,
+    owner:  User
     date: Date,
     _id?: string 
 }
 export interface Found{
     category:Category,
-    name: String,
+    name: string,
     city: string,
     street: string,
     owner: User,
     date: Date,
+   
     _id?: string 
 }
 export interface LogInUser{
@@ -98,9 +99,7 @@ export interface FieldFillByUser_Found{
     city: string,
     street: string,
     date: string,
-    firstIdentity: string,
-    secondIdentity: string,
-    thirdIdentity: string,
+    
 
 }
 export interface FieldFillByUser_Lost{
@@ -109,6 +108,7 @@ export interface FieldFillByUser_Lost{
     city: string,
     street: string,
     date: string,
+    
 
 }
 export enum Filters{
@@ -116,3 +116,4 @@ export enum Filters{
       אבדות,
       מציאות
 }
+export type UpdateFoundPayload = Partial<Found> & { _id: string };
