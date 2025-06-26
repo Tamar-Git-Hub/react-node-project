@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { getCookie } from '../../../utils/cookieUtils' 
 
-const apiSliceUsersFounds = createApi({
-    reducerPath: "foundsUser",
+const apiSliceUsersLosts = createApi({
+    reducerPath: "lostsUser",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000',
         credentials: 'include', 
@@ -14,8 +14,8 @@ const apiSliceUsersFounds = createApi({
             return headers;
         },
     }),
-    tagTypes: ["Found"],
+    tagTypes: ["Lost"],
     endpoints: () => ({}),
 });
 
-export default apiSliceUsersFounds;
+export default apiSliceUsersLosts;

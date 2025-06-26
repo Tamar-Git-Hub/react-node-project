@@ -2,6 +2,7 @@ const User=require('../models/User')
 
 exports.getAllUsers=async(req,res)=>{
     try{
+        
         const users=await User.find()
         res.json(users)
     }
@@ -33,14 +34,15 @@ exports.deleteUser=async(req,res)=>{
 
 exports.updateUser=async(req,res)=>{
     const {id}=req.params
-    const {name,passward,phone,email}=req.body
+    const {name,password,phone,email}=req.body
     try{
         const updateUser=await User.findOneAndUpdate(
-            {id: id},
-            {name,passward,phone,email},
+            {_id: id},
+            {name,password,phone,email},
             {new: true}
         )
         if (!updateUser){
+           
            return  res.status(404).json({message: 'user not found'})
         }
         res.json(updateUser)

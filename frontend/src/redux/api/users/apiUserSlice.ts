@@ -1,5 +1,6 @@
-import { LoginResponse, User } from "../../../interfaces/models";
 
+import { LoginResponse, User } from "../../../interfaces/models";
+import ResetPassword from "../../../pages/ResetPassword";
 import apiSliceUser from "./apiSliceUser";
 const apiUserSlice = apiSliceUser.injectEndpoints({
   endpoints: (builder) => ({

@@ -4,6 +4,7 @@ const AddLostSchema=z.object({
      date: z.string(),
      city:z.string(),
      street: z.string(),
+    
 })
 export default AddLostSchema
 
