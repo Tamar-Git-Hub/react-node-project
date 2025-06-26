@@ -7,14 +7,13 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import { CookiesProvider } from 'react-cookie'
 import { LoadScript } from '@react-google-maps/api'
-const KEY_API = 'AIzaSyBxB7-a9FdZheIkxwUyIuUG4z1aMRr6tEE';
 
 function App() {
   return (
     <>
       <CookiesProvider>
         <Provider store={store}>
-             <LoadScript googleMapsApiKey={KEY_API}>
+             <LoadScript googleMapsApiKey={process.env.KEY_API as string}>
           <RouterProvider router={router} />
           </LoadScript>
         </Provider>
