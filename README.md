@@ -21,8 +21,8 @@
 
 ממשק ניהול חפצים (עריכה, מחיקה).
 
-
 טכנולוגיות
+
 Frontend: React
 
 Backend: Node.js + Express
