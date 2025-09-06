@@ -1,44 +1,32 @@
-אפליקציית ניהול חפצים אבודים ומציאות
-תיאור
-אפליקציה שמאפשרת למשתמשים לדווח על חפצים שאיבדו או מצאו, לחפש חפצים, וליצור חיבור בין המאבדים למוצאים בצורה נוחה ופשוטה.
+# Lost & Found Management App
 
-תכונות עיקריות
-הרשמה והתחברות (אימייל/סיסמה).
+## Description
+An application that allows users to report lost or found items, search for items, and connect finders with owners in a simple and convenient way.
 
-דיווח על חפץ אבוד או מציאה עם  תיאור ומיקום.
+## Key Features
+- User registration and login (email/password)
+- Report lost or found items with description and location
+- Search for items by category and location
+- Interactive map displaying items with pins at relevant locations
+- City list retrieval from official government (GOV) data sources
+- Matching system between lost and found items
+- User profile management and updates
+- Notifications for users about matching items
+- Item management interface (edit, delete)
 
-חיפוש חפצים לפי קטגוריה, מיקום .
+## Technologies
+- **Frontend:** React  
+- **Backend:** Node.js + Express  
+- **Database:** MongoDB  
 
-הצגת החפצים על מפה אינטראקטיבית עם נעיצות במיקומים המתאימים.
+## Installation & Setup
 
-שליפת רשימת ערים ממקור ממשלתי (GOV) לשיפור חוויית המשתמש.
-
-מערכת התאמה בין חפצים אבודים ומציאות.
-
-אפשרות לעדכון פרטי משתמש.
-
-התראות למשתמשים על חפצים תואמים.
-
-ממשק ניהול חפצים (עריכה, מחיקה).
-
-טכנולוגיות
-
-Frontend: React
-
-Backend: Node.js + Express
-
-Database: MongoDB
-
-
-
-התקנה והרצה
-התקנת התלויות:
-
-הגדרת קובץ סביבה (למשל .env) עם משתני הגדרות נדרשים (DB_URI, API_KEYS וכו').
-
-הרצת השרת:
-
-npm start  
-הרצת ה-frontend:
-
-npm run dev 
+1. **Install dependencies:**  
+   ```bash
+   npm install
+2. **Run the backend server:**  
+   ```bash
+   npm start
+3. **Run the frontend:**  
+   ```bash
+   npm run dev
