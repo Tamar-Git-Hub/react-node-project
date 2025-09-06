@@ -1,4 +1,4 @@
-# Lost & Found Management App
+# Lost & Found Management System
 
 ## Description
 An application that allows users to report lost or found items, search for items, and connect finders with owners in a simple and convenient way.
